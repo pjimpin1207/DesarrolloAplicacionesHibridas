@@ -1,0 +1,33 @@
+<!-- La cabecera principal, visible en la parte superior de la pantalla -->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Lista de Tareas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Esta segunda cabecera crea el efecto de título grande que se encoge al hacer scroll -->
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Lista de Tareas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Directiva *ngIf: este div solo existirá en el DOM si la condición es verdadera -->
+  <div *ngIf="listaDeTareas.length === 0" class="mensaje-vacio">
+    <p>¡Enhorabuena!</p>
+    <p>No tienes tareas pendientes.</p>
+  </div>
+
+  <!-- 
+    Directiva *ngFor: este es el bucle. 
+    - Por cada objeto 'tarea' que haya en el array 'listaDeTareas'...
+    - ...Angular creará una instancia de nuestro componente <app-task-item>.
+  -->
+  <app-task-item
+    *ngFor="let tarea of listaDeTareas"
+    [tarea]="tarea"> <!-- Property Binding: le pasamos el objeto 'tarea' actual al @Input del componente hijo -->
+  </app-task-item>
+</ion-content>
