@@ -5,12 +5,11 @@ import { Noticia } from '../../interfaces/noticia';
 
 @Component({
   selector: 'app-noticia-item',
-  standalone: true,           // 🔹 Componente standalone
-  imports: [IonicModule, CommonModule], // 🔹 Necesario para usar ion-card y *ngIf/*ngFor
+  standalone: true,
+  imports: [IonicModule, CommonModule],
   templateUrl: './noticia-item.component.html',
   styleUrls: ['./noticia-item.component.scss'],
 })
 export class NoticiaItemComponent {
-  @Input() noticia!: Noticia; // 🔹 Recibe los datos del padre
+  @Input() noticia?: Noticia; // Manejo de datos opcionales
 }
-

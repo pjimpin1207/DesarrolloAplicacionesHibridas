@@ -1,27 +1,14 @@
-<!-- La cabecera principal, visible en la parte superior de la pantalla -->
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Noticias de Hoy
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- Componente de cabecera -->
+<app-header></app-header>
 
 <ion-content [fullscreen]="true">
-  <!-- Esta segunda cabecera crea el efecto de título grande que se encoge al hacer scroll -->
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Noticias de Hoy</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <!-- Directiva *ngIf: este div solo existirá en el DOM si no hay noticias -->
+  <!-- Mensaje si no hay noticias -->
   <div *ngIf="noticias.length === 0" class="mensaje-vacio">
     <p>¡No hay noticias disponibles!</p>
     <p>Vuelve más tarde para estar informado.</p>
   </div>
 
-  <!-- Directiva *ngFor: por cada noticia en el array 'noticias', se crea un componente hijo -->
+  <!-- Lista de noticias -->
   <app-noticia-item
     *ngFor="let noticia of noticias"
     [noticia]="noticia">

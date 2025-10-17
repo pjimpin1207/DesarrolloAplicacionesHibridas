@@ -4,4 +4,5 @@ export interface Noticia {
   descripcion: string;
   imagen: string;
   esUrgente?: boolean;
+  fecha?: Date;
 }
