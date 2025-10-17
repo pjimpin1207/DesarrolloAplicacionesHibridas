@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TaskItemComponent } from './task-item.component';
+import { NoticiaItemComponent } from './noticia-item.component';
 
-describe('TaskItemComponent', () => {
-  let component: TaskItemComponent;
-  let fixture: ComponentFixture<TaskItemComponent>;
+describe('NoticiaItemComponent', () => {
+  let component: NoticiaItemComponent;
+  let fixture: ComponentFixture<NoticiaItemComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaskItemComponent ],
+      declarations: [ NoticiaItemComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TaskItemComponent);
+    fixture = TestBed.createComponent(NoticiaItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

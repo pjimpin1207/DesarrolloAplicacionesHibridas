@@ -1,0 +1,9 @@
+<ion-card [color]="noticia.esUrgente ? 'danger' : 'primary'">
+  <img [src]="noticia.imagen" alt="{{ noticia.titulo }}">
+  <ion-card-header>
+    <ion-card-title>{{ noticia.titulo }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    {{ noticia.descripcion }}
+  </ion-card-content>
+</ion-card>

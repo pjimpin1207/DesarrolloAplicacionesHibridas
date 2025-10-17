@@ -2,7 +2,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Lista de Tareas
+      Noticias de Hoy
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,23 +11,19 @@
   <!-- Esta segunda cabecera crea el efecto de título grande que se encoge al hacer scroll -->
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Lista de Tareas</ion-title>
+      <ion-title size="large">Noticias de Hoy</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <!-- Directiva *ngIf: este div solo existirá en el DOM si la condición es verdadera -->
-  <div *ngIf="listaDeTareas.length === 0" class="mensaje-vacio">
-    <p>¡Enhorabuena!</p>
-    <p>No tienes tareas pendientes.</p>
+  <!-- Directiva *ngIf: este div solo existirá en el DOM si no hay noticias -->
+  <div *ngIf="noticias.length === 0" class="mensaje-vacio">
+    <p>¡No hay noticias disponibles!</p>
+    <p>Vuelve más tarde para estar informado.</p>
   </div>
 
-  <!-- 
-    Directiva *ngFor: este es el bucle. 
-    - Por cada objeto 'tarea' que haya en el array 'listaDeTareas'...
-    - ...Angular creará una instancia de nuestro componente <app-task-item>.
-  -->
-  <app-task-item
-    *ngFor="let tarea of listaDeTareas"
-    [tarea]="tarea"> <!-- Property Binding: le pasamos el objeto 'tarea' actual al @Input del componente hijo -->
-  </app-task-item>
+  <!-- Directiva *ngFor: por cada noticia en el array 'noticias', se crea un componente hijo -->
+  <app-noticia-item
+    *ngFor="let noticia of noticias"
+    [noticia]="noticia">
+  </app-noticia-item>
 </ion-content>
