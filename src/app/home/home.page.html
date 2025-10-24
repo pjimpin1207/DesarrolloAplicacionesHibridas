@@ -1,16 +1,87 @@
-<!-- Componente de cabecera -->
 <app-header></app-header>
 
-<ion-content [fullscreen]="true">
-  <!-- Mensaje si no hay noticias -->
-  <div *ngIf="noticias.length === 0" class="mensaje-vacio">
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <!-- HERO SECTION -->
+  <ion-grid class="hero-section">
+    <ion-row>
+      <!-- Columna izquierda: bienvenida e imagen -->
+      <ion-col size="12" size-lg="7" class="hero-text">
+        <h1>Noticias de Hoy</h1>
+        <h2>Bienvenido a <span class="accent">InfoNow</span></h2>
+        <p>Las últimas noticias, análisis de deporte en un solo lugar.</p>
+
+        <ion-img
+          src="https://m.media-amazon.com/images/S/pv-target-images/0eae7aa511d40b22153ac1d671658b8c8a1a654bb5b391ae72914ab4e2c36e58._SX1080_FMjpg_.jpg"
+          alt="Imagen de noticias"
+          class="hero-image">
+        </ion-img>
+      </ion-col>
+
+      <!-- Columna derecha: formulario de suscripción -->
+      <ion-col size="12" size-lg="5" class="hero-form">
+        <ion-card>
+          <ion-card-header color="secondary">
+            <ion-card-title>
+              <ion-icon name="newspaper-outline"></ion-icon>
+              Suscríbete a nuestras noticias
+            </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <form (ngSubmit)="guardarSuscripcion()">
+              <ion-item>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input [(ngModel)]="nombre" name="nombre" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Categoría</ion-label>
+                <ion-select [(ngModel)]="categoria" name="categoria" required>
+                  <ion-select-option value="tecnologia">Tecnología</ion-select-option>
+                  <ion-select-option value="deportes">Deportes</ion-select-option>
+                  <ion-select-option value="salud">Salud</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-button expand="block" type="submit" color="secondary" shape="round">
+                Suscribirme
+              </ion-button>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- SKELETONS (mientras carga) -->
+  <div *ngIf="loading">
+    <ion-card *ngFor="let i of [1,2,3]" class="skeleton-card">
+      <ion-card-header>
+        <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-skeleton-text animated style="width: 100%; height: 120px;"></ion-skeleton-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+<!-- REJILLA DE NOTICIAS -->
+<ion-grid *ngIf="!loading && noticias.length > 0" class="news-grid">
+  <ion-row>
+    <ion-col
+      size="12"
+      size-sm="6"
+      size-lg="4"
+      *ngFor="let noticia of noticias">
+      <app-noticia-item [noticia]="noticia"></app-noticia-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+  <!-- MENSAJE VACÍO -->
+  <div *ngIf="!loading && noticias.length === 0" class="mensaje-vacio">
     <p>¡No hay noticias disponibles!</p>
     <p>Vuelve más tarde para estar informado.</p>
   </div>
-
-  <!-- Lista de noticias -->
-  <app-noticia-item
-    *ngFor="let noticia of noticias"
-    [noticia]="noticia">
-  </app-noticia-item>
 </ion-content>

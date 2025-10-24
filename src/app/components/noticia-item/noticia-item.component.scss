@@ -1,0 +1,56 @@
+/* Tarjeta uniforme */
+ion-card.noticia-card {
+  width: 100%;
+  height: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+ion-card.noticia-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Imagen de la noticia */
+ion-img {
+  width: 100%;
+  height: 200px; /* 🔹 fija la altura */
+  object-fit: cover; /* 🔹 recorta sin deformar */
+}
+
+/* Contenido de la tarjeta */
+ion-card-header, ion-card-content {
+  padding: 12px 14px;
+  flex-shrink: 0;
+}
+
+/* Ajusta los títulos y subtítulos */
+ion-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+ion-card-subtitle {
+  font-size: 0.8rem;
+  color: #d1d5db;
+}
+
+/* Etiqueta de noticia urgente */
+.urgente {
+  background-color: var(--ion-color-secondary);
+  color: white;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 6px;
+  text-transform: uppercase;
+}
