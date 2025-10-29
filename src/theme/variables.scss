@@ -1,45 +1,47 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
-
 :root {
-  /* === Paleta principal === */
-  --ion-color-primary: #1E3A8A;
-  --ion-color-primary-rgb: 30, 58, 138;
+  /* === COLORES PRINCIPALES === */
+  --ion-color-primary: #004C3F;      /* Verde deportivo oscuro */
+  --ion-color-primary-rgb: 0, 76, 63;
+
+  --ion-color-secondary: #FF7B00;    /* Naranja energía */
+  --ion-color-secondary-rgb: 255, 123, 0;
+
+  --ion-color-tertiary: #0057B8;     /* Azul deportivo */
+  --ion-color-tertiary-rgb: 0, 87, 184;
+
+  --ion-color-success: #16A34A;      /* Verde césped */
+  --ion-color-warning: #FFD700;      /* Amarillo dorado (victoria) */
+  --ion-color-danger: #E63946;       /* Rojo pasión deportiva */
+  --ion-color-dark: #0F172A;         /* Gris muy oscuro */
+  --ion-color-medium: #64748B;       /* Gris medio */
+  --ion-color-light: #F3F4F6;        /* Gris claro / fondo limpio */
+
+  /* Contrastes */
   --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-shade: #1a347c;
-  --ion-color-primary-tint: #3b5db5;
-
-  --ion-color-secondary: #E63946;
-  --ion-color-secondary-rgb: 230, 57, 70;
   --ion-color-secondary-contrast: #ffffff;
-  --ion-color-secondary-shade: #cc313e;
-  --ion-color-secondary-tint: #eb5963;
-
-  /* === Colores de apoyo === */
-  --ion-color-success: #16A34A;
+  --ion-color-tertiary-contrast: #ffffff;
   --ion-color-success-contrast: #ffffff;
-
-  --ion-color-warning: #F59E0B;
   --ion-color-warning-contrast: #000000;
-
-  --ion-color-danger: #DC2626;
   --ion-color-danger-contrast: #ffffff;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-light-contrast: #000000;
 
-  --ion-color-medium: #374151;
-  --ion-color-light: #F9FAFB;
-  --ion-color-dark: #111827;
-
-  /* === Fondo global === */
-  --ion-background-color: var(--ion-color-light);
-  --ion-text-color: #111827;
+  /* Fuentes */
+  --ion-font-family: 'Titillium Web', sans-serif;
 }
 
-/* === Modo oscuro === */
+/* === MODO OSCURO DEPORTIVO === */
 @media (prefers-color-scheme: dark) {
   :root {
-    --ion-color-primary: #3B82F6;
-    --ion-color-secondary: #F87171;
-    --ion-background-color: #111827;
-    --ion-text-color: #F9FAFB;
+    --ion-color-primary: #0A3D2E;    /* Verde más profundo */
+    --ion-color-secondary: #E96D00;  /* Naranja cálido */
+    --ion-color-tertiary: #1E3A8A;   /* Azul más oscuro */
+    --ion-color-success: #22C55E;
+    --ion-color-warning: #FBBF24;
+    --ion-color-danger: #EF4444;
+    --ion-color-dark: #0B1120;
+    --ion-color-medium: #94A3B8;
+    --ion-color-light: #1E293B;
   }
 }

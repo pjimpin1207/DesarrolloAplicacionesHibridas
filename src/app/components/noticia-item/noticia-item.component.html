@@ -1,9 +1,18 @@
-<ion-card *ngIf="noticia" [color]="noticia.esUrgente ? 'danger' : 'primary'">
-  <img [src]="noticia.imagen" alt="{{ noticia.titulo }}">
+<ion-card class="noticia-card">
+  <ion-img [src]="noticia.imagen" alt="{{ noticia.titulo }}"></ion-img>
+
   <ion-card-header>
-    <ion-card-title>{{ noticia.titulo | uppercase }}</ion-card-title>
-    <ion-card-subtitle *ngIf="noticia.fecha">{{ noticia.fecha | date:'mediumDate' }}</ion-card-subtitle>
+    <ion-card-subtitle>
+      <span *ngIf="noticia.categoria" class="categoria" [ngClass]="noticia.categoria.toLowerCase()">
+        {{ noticia.categoria }}
+      </span>
+      <span *ngIf="noticia.esUrgente" class="urgente">URGENTE</span>
+    </ion-card-subtitle>
+
+    <ion-card-title>{{ noticia.titulo }}</ion-card-title>
+    <ion-card-subtitle>{{ noticia.fecha | date: 'mediumDate' }}</ion-card-subtitle>
   </ion-card-header>
+
   <ion-card-content>
     {{ noticia.descripcion }}
   </ion-card-content>

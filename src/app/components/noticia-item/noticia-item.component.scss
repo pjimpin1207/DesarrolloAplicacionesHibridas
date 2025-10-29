@@ -1,56 +1,69 @@
-/* Tarjeta uniforme */
-ion-card.noticia-card {
-  width: 100%;
-  height: 100%;
-  max-width: 380px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.noticia-card {
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-ion-card.noticia-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+.noticia-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* Imagen de la noticia */
+/* === IMAGEN (más grande y centrada) === */
 ion-img {
   width: 100%;
-  height: 200px; /* 🔹 fija la altura */
-  object-fit: cover; /* 🔹 recorta sin deformar */
+  height: 300px; /* antes 230px → más alta */
+  object-fit: cover; /* mantiene proporción */
+  object-position: center top; /* centra el recorte en la parte superior */
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 
-/* Contenido de la tarjeta */
-ion-card-header, ion-card-content {
-  padding: 12px 14px;
-  flex-shrink: 0;
+/* Efecto hover ligero y profesional */
+.noticia-card:hover ion-img {
+  transform: scale(1.03);
+  filter: brightness(1.1);
 }
 
-/* Ajusta los títulos y subtítulos */
-ion-card-title {
-  font-size: 1rem;
+/* === ETIQUETAS === */
+.categoria {
+  color: white;
   font-weight: 700;
-  line-height: 1.3;
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-right: 6px;
   text-transform: uppercase;
 }
 
-ion-card-subtitle {
-  font-size: 0.8rem;
-  color: #d1d5db;
+.categoria.fútbol {
+  background-color: #16A34A; /* verde césped */
 }
 
-/* Etiqueta de noticia urgente */
+.categoria.baloncesto {
+  background-color: #EA580C; /* naranja balón */
+}
+
+.categoria.tenis {
+  background-color: #2563EB; /* azul pista */
+}
+
 .urgente {
   background-color: var(--ion-color-secondary);
   color: white;
   font-weight: 700;
   font-size: 0.75rem;
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: 4px;
-  margin-right: 6px;
   text-transform: uppercase;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  ion-img {
+    height: 240px; /* reduce suavemente en móvil */
+  }
 }

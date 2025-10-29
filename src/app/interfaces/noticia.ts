@@ -3,6 +3,7 @@ export interface Noticia {
   titulo: string;
   descripcion: string;
   imagen: string;
-  esUrgente?: boolean;
-  fecha?: Date;
+  esUrgente: boolean;
+  fecha: Date;
+  categoria?: string;
 }
