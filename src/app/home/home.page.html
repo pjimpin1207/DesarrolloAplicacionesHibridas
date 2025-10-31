@@ -1,102 +1,23 @@
-<!-- CABECERA -->
 <app-header></app-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-
   <!-- SECCIÓN HERO -->
   <ion-grid class="hero-section">
-    <ion-row>
-      <!-- Columna izquierda: presentación -->
-      <ion-col size="12" size-lg="7" class="hero-text">
-        <h1>Noticias Deportivas</h1>
-        <h2>Bienvenido a <span class="accent">InfoNow</span></h2>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="12" size-md="6" class="hero-text">
+        <h1>Bienvenido a <span class="accent">InfoNow</span></h1>
+        <h2>Tu portal de noticias deportivas</h2>
         <p>
-          Mantente al día con las últimas novedades del mundo del 
-          <strong>fútbol</strong>, <strong>baloncesto</strong> y <strong>tenis</strong>.
+          Descubre lo último en <strong>fútbol</strong>, <strong>baloncesto</strong> y <strong>tenis</strong>.
+          Resultados, análisis y lo mejor del deporte mundial.
         </p>
-
-        <ion-img
-          src="https://cdn.mos.cms.futurecdn.net/GGtZn5SU3nnezoso6truXM.jpg"
-          alt="Deportes"
-          class="hero-image">
-        </ion-img>
       </ion-col>
 
-      <!-- Columna derecha: formulario para nueva noticia -->
-      <ion-col size="12" size-lg="5" class="hero-form">
-        <ion-card>
-          <ion-card-header color="secondary">
-            <ion-card-title>
-              <ion-icon name="add-circle-outline"></ion-icon>
-              Publicar nueva noticia
-            </ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            <form (ngSubmit)="agregarNoticia()">
-              <ion-item>
-                <ion-label position="floating">Título</ion-label>
-                <ion-input [(ngModel)]="nuevaNoticia.titulo" name="titulo" required></ion-input>
-              </ion-item>
-
-              <ion-item>
-                <ion-label position="floating">Descripción</ion-label>
-                <ion-textarea
-                  autoGrow="true"
-                  [(ngModel)]="nuevaNoticia.descripcion"
-                  name="descripcion"
-                  required>
-                </ion-textarea>
-              </ion-item>
-
-              <ion-item>
-                <ion-label position="floating">URL de imagen</ion-label>
-                <ion-input [(ngModel)]="nuevaNoticia.imagen" name="imagen"></ion-input>
-              </ion-item>
-
-              <!-- Selección de categoría deportiva -->
-              <ion-item>
-                <ion-label>Categoría</ion-label>
-                <ion-select
-                  [(ngModel)]="nuevaNoticia.categoria"
-                  name="categoria"
-                  placeholder="Selecciona una categoría">
-                  <ion-select-option value="Fútbol">Fútbol</ion-select-option>
-                  <ion-select-option value="Baloncesto">Baloncesto</ion-select-option>
-                  <ion-select-option value="Tenis">Tenis</ion-select-option>
-                </ion-select>
-              </ion-item>
-
-              <ion-item lines="none">
-                <ion-label>Urgente</ion-label>
-                <ion-toggle
-                  [(ngModel)]="nuevaNoticia.esUrgente"
-                  name="esUrgente"
-                  color="secondary">
-                </ion-toggle>
-              </ion-item>
-
-              <ion-button expand="block" type="submit" color="secondary" shape="round">
-                Publicar noticia
-              </ion-button>
-            </form>
-          </ion-card-content>
-        </ion-card>
+      <ion-col size="12" size-md="6" class="hero-image">
+        <ion-img src="https://madridistareal.com/wp-content/uploads/2025/10/jude-bellingham-celebracion-gol-clasico.webp" alt="Noticias deportivas"></ion-img>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <!-- SKELETONS DE CARGA -->
-  <div *ngIf="loading">
-    <ion-card *ngFor="let i of [1,2,3]" class="skeleton-card">
-      <ion-card-header>
-        <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-skeleton-text animated style="width: 100%; height: 120px;"></ion-skeleton-text>
-      </ion-card-content>
-    </ion-card>
-  </div>
 
   <!-- GRID DE NOTICIAS -->
   <ion-grid *ngIf="!loading && noticias.length > 0" class="news-grid">
@@ -117,4 +38,61 @@
     <p>¡Publica la primera!</p>
   </div>
 
+  <!-- BOTÓN FLOTANTE CON ICONO VISIBLE -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="fab-add" (click)="abrirModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- MODAL DE NUEVA NOTICIA -->
+  <ion-modal [isOpen]="modalAbierto" (didDismiss)="cerrarModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Crear noticia</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <form (ngSubmit)="agregarNoticia(); cerrarModal()">
+          <ion-item>
+            <ion-label position="floating">Título</ion-label>
+            <ion-input [(ngModel)]="nuevaNoticia.titulo" name="titulo" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Descripción</ion-label>
+            <ion-textarea autoGrow="true" [(ngModel)]="nuevaNoticia.descripcion" name="descripcion" required></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">URL de imagen</ion-label>
+            <ion-input [(ngModel)]="nuevaNoticia.imagen" name="imagen"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Categoría</ion-label>
+            <ion-select [(ngModel)]="nuevaNoticia.categoria" name="categoria" placeholder="Selecciona una categoría">
+              <ion-select-option value="Fútbol">Fútbol</ion-select-option>
+              <ion-select-option value="Baloncesto">Baloncesto</ion-select-option>
+              <ion-select-option value="Tenis">Tenis</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label>Urgente</ion-label>
+            <ion-toggle [(ngModel)]="nuevaNoticia.esUrgente" name="esUrgente" color="secondary"></ion-toggle>
+          </ion-item>
+
+          <ion-button expand="block" type="submit" color="secondary" shape="round" class="mt-3">
+            Publicar noticia
+          </ion-button>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

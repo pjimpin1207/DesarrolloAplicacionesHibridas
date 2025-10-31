@@ -21,7 +21,6 @@ import { Noticia } from '../interfaces/noticia';
 })
 export class HomePage implements OnInit {
 
-  // 📰 Lista de noticias deportivas inicial
   noticias: Noticia[] = [
     {
       id: 1,
@@ -61,7 +60,6 @@ export class HomePage implements OnInit {
     }
   ];
 
-  // 🆕 Objeto para el formulario de nueva noticia
   nuevaNoticia: Noticia = {
     id: 0,
     titulo: '',
@@ -72,8 +70,8 @@ export class HomePage implements OnInit {
     fecha: new Date()
   };
 
-  // ⏳ Estado de carga
   loading = true;
+  modalAbierto = false; // controla el estado del modal
 
   constructor(
     private toastController: ToastController,
@@ -82,9 +80,7 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.loading = false;
-    }, 2500);
+    setTimeout(() => (this.loading = false), 2500);
   }
 
   ionViewDidEnter() {
@@ -100,7 +96,14 @@ export class HomePage implements OnInit {
     }
   }
 
-  // 🚀 Publicar nueva noticia
+  abrirModal() {
+    this.modalAbierto = true;
+  }
+
+  cerrarModal() {
+    this.modalAbierto = false;
+  }
+
   async agregarNoticia() {
     if (
       !this.nuevaNoticia.titulo.trim() ||
