@@ -71,7 +71,7 @@ export class HomePage implements OnInit {
   };
 
   loading = true;
-  modalAbierto = false; // controla el estado del modal
+  modalAbierto = false;
 
   constructor(
     private toastController: ToastController,
@@ -80,7 +80,8 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    setTimeout(() => (this.loading = false), 2500);
+    // Simular la carga de datos
+    setTimeout(() => (this.loading = false), 1000);
   }
 
   ionViewDidEnter() {
