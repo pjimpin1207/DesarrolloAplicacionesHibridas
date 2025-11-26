@@ -20,19 +20,38 @@
     </ion-row>
   </ion-grid>
 
-  <!-- SKELETONS DE CARGA -->
-  <div *ngIf="loading" class="skeleton-container">
-    <ion-card *ngFor="let i of [1, 2, 3]" class="skeleton-card">
-      <ion-skeleton-text animated style="width: 100%; height: 200px; border-radius: 8px;"></ion-skeleton-text>
-      <ion-card-header>
-        <ion-skeleton-text animated style="width: 80%; height: 16px; margin-bottom: 8px;"></ion-skeleton-text>
-        <ion-skeleton-text animated style="width: 60%; height: 14px;"></ion-skeleton-text>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-skeleton-text animated style="width: 100%; height: 50px;"></ion-skeleton-text>
-      </ion-card-content>
-    </ion-card>
-  </div>
+<!-- SKELETONS DE CARGA (3 COLUMNAS SIEMPRE) -->
+<ion-grid *ngIf="loading" class="news-grid fade-in">
+  <ion-row>
+    <ion-col size="12" size-sm="6" size-lg="4" *ngFor="let i of [1,2,3,4,5,6]">
+
+      <ion-card class="skeleton-card">
+
+        <!-- Imagen -->
+        <ion-skeleton-text animated style="width: 100%; height: 220px; border-radius: 12px;"></ion-skeleton-text>
+
+        <ion-card-header>
+          <!-- Título -->
+          <ion-skeleton-text animated style="width: 85%; height: 20px; margin-bottom: 8px;"></ion-skeleton-text>
+
+          <!-- Fecha / etiqueta -->
+          <ion-skeleton-text animated style="width: 45%; height: 14px;"></ion-skeleton-text>
+        </ion-card-header>
+
+        <ion-card-content>
+          <!-- Descripción línea 1 -->
+          <ion-skeleton-text animated style="width: 100%; height: 14px; margin-bottom: 6px;"></ion-skeleton-text>
+
+          <!-- Descripción línea 2 -->
+          <ion-skeleton-text animated style="width: 80%; height: 14px;"></ion-skeleton-text>
+        </ion-card-content>
+
+      </ion-card>
+
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
 
   <!-- GRID DE NOTICIAS -->
   <ion-grid *ngIf="!loading && noticias.length > 0" class="news-grid">
