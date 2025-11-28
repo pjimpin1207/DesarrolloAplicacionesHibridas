@@ -1,5 +1,18 @@
 <ion-header>
-  <ion-toolbar color="primary" class="header-toolbar">
-    <ion-title>InfoNow</ion-title>
+  <ion-toolbar color="primary">
+
+    <!-- TÍTULO CENTRADO -->
+    <ion-title class="ion-text-center">
+      InfoNow
+    </ion-title>
+
+    <!-- BOTÓN ABOUT (texto + icono) -->
+    <ion-buttons slot="end">
+      <ion-button routerLink="/about" class="about-btn">
+        <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+        About
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>

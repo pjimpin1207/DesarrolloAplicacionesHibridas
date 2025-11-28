@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { add } from 'ionicons/icons'; // importamos el icono “+”
+import {
+  add,
+  informationCircleOutline
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +15,9 @@ import { add } from 'ionicons/icons'; // importamos el icono “+”
 })
 export class AppComponent {
   constructor() {
-    // ✅ Registramos el icono "add" (y puedes añadir más si quieres)
-    addIcons({ add });
+    addIcons({
+      add,
+      'information-circle-outline': informationCircleOutline
+    });
   }
 }

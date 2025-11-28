@@ -1,0 +1,50 @@
+.about-page {
+  font-family: 'Titillium Web', sans-serif;
+}
+
+/* HERO */
+.about-hero {
+  margin-bottom: 1.5rem;
+}
+
+.about-logo {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 12px auto;
+}
+
+.titulo-about {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+.subtitulo-about {
+  font-size: 1.1rem;
+  color: var(--ion-color-medium);
+  margin-top: -6px;
+}
+
+/* TARJETAS */
+.about-card {
+  border-radius: 14px;
+  margin-bottom: 1rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+}
+
+ion-card-title {
+  color: var(--ion-color-primary);
+  font-weight: 700;
+}
+
+ion-item ion-icon {
+  color: var(--ion-color-secondary);
+  font-size: 1.5rem;
+}
+
+.creditos {
+  text-align: center;
+  margin-top: 2rem;
+  display: block;
+  color: var(--ion-color-medium);
+}
