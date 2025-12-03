@@ -6,8 +6,14 @@ import { NoticiaItemComponent } from '../components/noticia-item/noticia-item.co
 import { HeaderComponent } from '../components/header/header.component';
 import { Noticia } from '../interfaces/noticia';
 import { NoticiaService } from '../services/noticia.service';
+import { RouterLink } from '@angular/router';
+
+
+// 👉 IMPORTACIÓN NUEVA DEL ROUTER
+import { Router } from '@angular/router';
 
 @Component({
+  
   selector: 'app-home',
   standalone: true,
   imports: [
@@ -15,7 +21,8 @@ import { NoticiaService } from '../services/noticia.service';
     CommonModule,
     FormsModule,
     NoticiaItemComponent,
-    HeaderComponent
+    HeaderComponent,
+    RouterLink
   ],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss']
@@ -41,11 +48,13 @@ export class HomePage implements OnInit {
     private noticiaService: NoticiaService,
     private toastController: ToastController,
     private alertController: AlertController,
-    private animationCtrl: AnimationController
+    private animationCtrl: AnimationController,
+
+    // 👉 INYECCIÓN DEL ROUTER EN EL CONSTRUCTOR
+    private router: Router
   ) {}
 
   ngOnInit() {
-    // Simular la carga de datos
     setTimeout(() => {
       this.noticias = this.noticiaService.getNoticias();
       this.loading = false;
@@ -63,6 +72,14 @@ export class HomePage implements OnInit {
         .fromTo('transform', 'translateY(40px)', 'translateY(0)');
       anim.play();
     }
+  }
+
+  // 👉 MÉTODO NUEVO PARA NAVEGAR A ABOUT
+  navegarAAbout() {
+    console.log("Realizando operaciones previas...");
+    console.log("Navegando a la página About...");
+
+    this.router.navigate(['/about']);
   }
 
   abrirModal() {
@@ -97,13 +114,13 @@ export class HomePage implements OnInit {
           text: 'Publicar',
           handler: async () => {
 
-            // <-- AÑADIR AL SERVICIO
+            // 👉 Añadir noticia en el servicio
             this.noticiaService.addNoticia(this.nuevaNoticia);
 
-            // <-- RECARGAR LISTA DESDE EL SERVICIO
+            // 👉 Recargar noticias desde el servicio
             this.noticias = this.noticiaService.getNoticias();
 
-            // <-- RESETEAR FORMULARIO
+            // 👉 Resetear el formulario
             this.nuevaNoticia = {
               id: 0,
               titulo: '',

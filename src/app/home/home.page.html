@@ -20,51 +20,58 @@
     </ion-row>
   </ion-grid>
 
-  
+  <ion-button (click)="navegarAAbout()">
+    Ir a About (con lógica)
+  </ion-button>
 
-<!-- SKELETONS DE CARGA-->
-<ion-grid *ngIf="loading" class="news-grid fade-in">
-  <ion-row>
-    <ion-col size="12" size-sm="6" size-lg="4" *ngFor="let i of [1,2,3,4,5,6]">
+  <!-- SKELETONS DE CARGA -->
+  <ion-grid *ngIf="loading" class="news-grid fade-in">
+    <ion-row>
+      <ion-col size="12" size-sm="6" size-lg="4" *ngFor="let i of [1,2,3,4,5,6]">
 
-      <ion-card class="skeleton-card">
+        <ion-card class="skeleton-card">
 
-        <!-- Imagen -->
-        <ion-skeleton-text animated style="width: 100%; height: 220px; border-radius: 12px;"></ion-skeleton-text>
+          <!-- Imagen -->
+          <ion-skeleton-text animated style="width: 100%; height: 220px; border-radius: 12px;"></ion-skeleton-text>
 
-        <ion-card-header>
-          <!-- Título -->
-          <ion-skeleton-text animated style="width: 85%; height: 20px; margin-bottom: 8px;"></ion-skeleton-text>
+          <ion-card-header>
+            <!-- Título -->
+            <ion-skeleton-text animated style="width: 85%; height: 20px; margin-bottom: 8px;"></ion-skeleton-text>
 
-          <!-- Fecha / etiqueta -->
-          <ion-skeleton-text animated style="width: 45%; height: 14px;"></ion-skeleton-text>
-        </ion-card-header>
+            <!-- Fecha -->
+            <ion-skeleton-text animated style="width: 45%; height: 14px;"></ion-skeleton-text>
+          </ion-card-header>
 
-        <ion-card-content>
-          <!-- Descripción línea 1 -->
-          <ion-skeleton-text animated style="width: 100%; height: 14px; margin-bottom: 6px;"></ion-skeleton-text>
+          <ion-card-content>
+            <ion-skeleton-text animated style="width: 100%; height: 14px; margin-bottom: 6px;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%; height: 14px;"></ion-skeleton-text>
+          </ion-card-content>
 
-          <!-- Descripción línea 2 -->
-          <ion-skeleton-text animated style="width: 80%; height: 14px;"></ion-skeleton-text>
-        </ion-card-content>
+        </ion-card>
 
-      </ion-card>
-
-    </ion-col>
-  </ion-row>
-</ion-grid>
-
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <!-- GRID DE NOTICIAS -->
   <ion-grid *ngIf="!loading && noticias.length > 0" class="news-grid">
     <ion-row>
+
       <ion-col
         size="12"
         size-sm="6"
         size-lg="4"
         *ngFor="let noticia of noticias">
-        <app-noticia-item [noticia]="noticia"></app-noticia-item>
+
+        <!-- ROUTERLINK A DETALLE-NOTICIA -->
+        <app-noticia-item
+          [noticia]="noticia"
+          [routerLink]="['/detalle-noticia', noticia.id]"
+          style="cursor: pointer">
+        </app-noticia-item>
+
       </ion-col>
+
     </ion-row>
   </ion-grid>
 
@@ -95,42 +102,26 @@
 
       <ion-content class="ion-padding">
 
-        <!-- FORMULARIO DE CREACIÓN DE NOTICIA -->
         <form (ngSubmit)="agregarNoticia(); cerrarModal()">
 
           <ion-item>
             <ion-label position="floating">Título</ion-label>
-            <ion-input
-              [(ngModel)]="nuevaNoticia.titulo"
-              name="titulo"
-              required>
-            </ion-input>
+            <ion-input [(ngModel)]="nuevaNoticia.titulo" name="titulo" required></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">Descripción</ion-label>
-            <ion-textarea
-              autoGrow="true"
-              [(ngModel)]="nuevaNoticia.descripcion"
-              name="descripcion"
-              required>
-            </ion-textarea>
+            <ion-textarea autoGrow="true" [(ngModel)]="nuevaNoticia.descripcion" name="descripcion" required></ion-textarea>
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">URL de imagen</ion-label>
-            <ion-input
-              [(ngModel)]="nuevaNoticia.imagen"
-              name="imagen">
-            </ion-input>
+            <ion-input [(ngModel)]="nuevaNoticia.imagen" name="imagen"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label>Categoría</ion-label>
-            <ion-select
-              [(ngModel)]="nuevaNoticia.categoria"
-              name="categoria"
-              placeholder="Selecciona una categoría">
+            <ion-select [(ngModel)]="nuevaNoticia.categoria" name="categoria" placeholder="Selecciona una categoría">
               <ion-select-option value="Fútbol">Fútbol</ion-select-option>
               <ion-select-option value="Baloncesto">Baloncesto</ion-select-option>
               <ion-select-option value="Tenis">Tenis</ion-select-option>
@@ -139,23 +130,15 @@
 
           <ion-item lines="none">
             <ion-label>Urgente</ion-label>
-            <ion-toggle
-              [(ngModel)]="nuevaNoticia.esUrgente"
-              name="esUrgente"
-              color="secondary">
-            </ion-toggle>
+            <ion-toggle [(ngModel)]="nuevaNoticia.esUrgente" name="esUrgente" color="secondary"></ion-toggle>
           </ion-item>
 
-          <ion-button
-            expand="block"
-            type="submit"
-            color="secondary"
-            shape="round"
-            class="mt-3">
+          <ion-button expand="block" type="submit" color="secondary" shape="round" class="mt-3">
             Publicar noticia
           </ion-button>
 
         </form>
+
       </ion-content>
     </ng-template>
   </ion-modal>
