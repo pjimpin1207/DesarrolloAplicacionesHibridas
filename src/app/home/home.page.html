@@ -6,8 +6,16 @@
   <ion-grid class="hero-section">
     <ion-row class="ion-align-items-center">
       <ion-col size="12" size-md="6" class="hero-text">
+
         <h1>Bienvenido a <span class="accent">InfoNow</span></h1>
+
+        <!-- ⭐ NUEVO SALUDO PERSONALIZADO -->
+        <p *ngIf="nombreUsuario" class="saludo-usuario">
+          Hola, <strong>{{ nombreUsuario }}</strong> 👋
+        </p>
+
         <h2>Tu portal de noticias deportivas</h2>
+
         <p>
           Descubre lo último en <strong>fútbol</strong>, <strong>baloncesto</strong> y <strong>tenis</strong>.
           Resultados, análisis y lo mejor del deporte mundial.
@@ -15,11 +23,15 @@
       </ion-col>
 
       <ion-col size="12" size-md="6" class="hero-image">
-        <ion-img src="https://madridistareal.com/wp-content/uploads/2025/10/jude-bellingham-celebracion-gol-clasico.webp" alt="Noticias deportivas"></ion-img>
+        <ion-img 
+          src="https://madridistareal.com/wp-content/uploads/2025/10/jude-bellingham-celebracion-gol-clasico.webp"
+          alt="Noticias deportivas">
+        </ion-img>
       </ion-col>
     </ion-row>
   </ion-grid>
 
+  <!-- BOTÓN EJEMPLO PARA NAVEGAR A ABOUT -->
   <ion-button (click)="navegarAAbout()">
     Ir a About (con lógica)
   </ion-button>
@@ -30,15 +42,10 @@
       <ion-col size="12" size-sm="6" size-lg="4" *ngFor="let i of [1,2,3,4,5,6]">
 
         <ion-card class="skeleton-card">
-
-          <!-- Imagen -->
           <ion-skeleton-text animated style="width: 100%; height: 220px; border-radius: 12px;"></ion-skeleton-text>
 
           <ion-card-header>
-            <!-- Título -->
             <ion-skeleton-text animated style="width: 85%; height: 20px; margin-bottom: 8px;"></ion-skeleton-text>
-
-            <!-- Fecha -->
             <ion-skeleton-text animated style="width: 45%; height: 14px;"></ion-skeleton-text>
           </ion-card-header>
 
@@ -46,7 +53,6 @@
             <ion-skeleton-text animated style="width: 100%; height: 14px; margin-bottom: 6px;"></ion-skeleton-text>
             <ion-skeleton-text animated style="width: 80%; height: 14px;"></ion-skeleton-text>
           </ion-card-content>
-
         </ion-card>
 
       </ion-col>
@@ -121,7 +127,10 @@
 
           <ion-item>
             <ion-label>Categoría</ion-label>
-            <ion-select [(ngModel)]="nuevaNoticia.categoria" name="categoria" placeholder="Selecciona una categoría">
+            <ion-select
+              [(ngModel)]="nuevaNoticia.categoria"
+              name="categoria"
+              placeholder="Selecciona una categoría">
               <ion-select-option value="Fútbol">Fútbol</ion-select-option>
               <ion-select-option value="Baloncesto">Baloncesto</ion-select-option>
               <ion-select-option value="Tenis">Tenis</ion-select-option>

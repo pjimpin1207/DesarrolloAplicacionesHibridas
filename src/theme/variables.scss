@@ -1,23 +1,48 @@
+/* ============================================================
+   VARIABLES GLOBALES DE INFO NOW
+   Aquí defines TODOS los colores y estilos base de tu aplicación.
+   Ionic usa estas variables para pintar componentes (botones, cards,
+   fondos, textos, barras superiores...). 
+   ============================================================ */
+
 :root {
-  /* === COLORES PRINCIPALES === */
-  --ion-color-primary: #004C3F;      /* Verde deportivo oscuro */
-  --ion-color-primary-rgb: 0, 76, 63;
+  /* ---------------------------------
+     🎨 COLORES PRINCIPALES DEL TEMA
+     Estos son los colores que más verás en botones, acentos,
+     iconos importantes, etc.
+     --------------------------------- */
 
-  --ion-color-secondary: #FF7B00;    /* Naranja energía */
-  --ion-color-secondary-rgb: 255, 123, 0;
+  --ion-color-primary: #000000;      /* Color principal (botones, header) */
+  --ion-color-primary-rgb: 213, 35, 181;
 
-  --ion-color-tertiary: #0057B8;     /* Azul deportivo */
-  --ion-color-tertiary-rgb: 0, 87, 184;
+  --ion-color-secondary: #4de113;    /* Color secundario (toggles, badges) */
+  --ion-color-secondary-rgb: 77, 225, 19;
 
-  --ion-color-success: #16A34A;      /* Verde césped */
-  --ion-color-warning: #FFD700;      /* Amarillo dorado (victoria) */
-  --ion-color-danger: #E63946;       /* Rojo pasión deportiva */
-  --ion-color-dark: #0F172A;         /* Gris muy oscuro */
+  --ion-color-tertiary: #2ddc41;     /* Color terciario opcional */
+  --ion-color-tertiary-rgb: 45, 220, 65;
+
+    --ion-background-color: #ffffff;   /* FONDO BLANCO */
+  --ion-color-light: #f4f4f4;
+
+  /* ---------------------------------
+     ✳ COLORES DE ESTADO
+     --------------------------------- */
+  --ion-color-success: #16A34A;      /* Mensajes de éxito */
+  --ion-color-warning: #FFD700;      /* Amarillo para avisos */
+  --ion-color-danger: #E63946;       /* Mensajes de error o alertas */
+
+  /* ---------------------------------
+     🎭 COLORES BASE DE LA INTERFAZ
+     --------------------------------- */
+  --ion-color-dark: #ffffff;         /* Texto oscuro / fondos oscuros */
   --ion-color-medium: #64748B;       /* Gris medio */
-  --ion-color-light: #F3F4F6;        /* Gris claro / fondo limpio */
+  --ion-color-light: #F3F4F6;        /* Gris claro (ideal como fondo) */
 
-  /* Contrastes */
-  --ion-color-primary-contrast: #ffffff;
+  /* ---------------------------------
+     📝 COLORES DE CONTRASTE DEL TEXTO
+     IMPORTANTE: Definen el color del texto dentro de los botones.
+     --------------------------------- */
+  --ion-color-primary-contrast: #ffffff;  
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-success-contrast: #ffffff;
@@ -27,21 +52,38 @@
   --ion-color-medium-contrast: #ffffff;
   --ion-color-light-contrast: #000000;
 
-  /* Fuentes */
+  /* ---------------------------------
+     🖊 FUENTE GLOBAL DE LA APP
+     --------------------------------- */
   --ion-font-family: 'Titillium Web', sans-serif;
 }
 
-/* === MODO OSCURO DEPORTIVO === */
+/* ============================================================
+   🌙 MODO OSCURO
+   Se activa automáticamente cuando el sistema del usuario
+   está en modo oscuro o si tú lo activas manualmente con Settings.
+   ============================================================ */
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --ion-color-primary: #0A3D2E;    /* Verde más profundo */
-    --ion-color-secondary: #E96D00;  /* Naranja cálido */
-    --ion-color-tertiary: #1E3A8A;   /* Azul más oscuro */
+    /* ---------------------------------
+       🎨 Colores en modo oscuro
+       Cambia estos para personalizar tu tema dark
+       --------------------------------- */
+
+    --ion-color-primary: #0A3D2E;     /* Versión oscura del primary */
+    --ion-color-secondary: #E96D00;   /* Versión oscura del secondary */
+    --ion-color-tertiary: #1E3A8A;    /* Versión oscura del tertiary */
+
     --ion-color-success: #22C55E;
     --ion-color-warning: #FBBF24;
     --ion-color-danger: #EF4444;
-    --ion-color-dark: #0B1120;
-    --ion-color-medium: #94A3B8;
-    --ion-color-light: #1E293B;
+
+    /* ---------------------------------
+       🖤 COLORES BASE DEL MODO OSCURO
+       --------------------------------- */
+    --ion-color-dark: #0B1120;        /* Fondo general oscuro */
+    --ion-color-medium: #94A3B8;      /* Texto gris claro */
+    --ion-color-light: #1E293B;       /* Cards / fondos medios */
   }
 }

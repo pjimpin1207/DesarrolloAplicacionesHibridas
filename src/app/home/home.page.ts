@@ -6,14 +6,12 @@ import { NoticiaItemComponent } from '../components/noticia-item/noticia-item.co
 import { HeaderComponent } from '../components/header/header.component';
 import { Noticia } from '../interfaces/noticia';
 import { NoticiaService } from '../services/noticia.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
-
-// 👉 IMPORTACIÓN NUEVA DEL ROUTER
-import { Router } from '@angular/router';
+// 👉 Importamos el servicio de ajustes
+import { SettingsService } from '../services/settings.service';
 
 @Component({
-  
   selector: 'app-home',
   standalone: true,
   imports: [
@@ -30,6 +28,9 @@ import { Router } from '@angular/router';
 export class HomePage implements OnInit {
 
   noticias: Noticia[] = [];
+
+  // 👉 NUEVA VARIABLE PARA EL SALUDO
+  nombreUsuario: string = '';
 
   nuevaNoticia: Noticia = {
     id: 0,
@@ -50,11 +51,19 @@ export class HomePage implements OnInit {
     private alertController: AlertController,
     private animationCtrl: AnimationController,
 
-    // 👉 INYECCIÓN DEL ROUTER EN EL CONSTRUCTOR
-    private router: Router
+    // 👉 Router para navegar
+    private router: Router,
+
+    // 👉 Servicio de ajustes para leer el nombre guardado
+    private settingsService: SettingsService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    // 👉 Recuperamos el nombre del usuario al iniciar
+    this.nombreUsuario = await this.settingsService.getUserName();
+
+    // Cargar noticias simulando carga
     setTimeout(() => {
       this.noticias = this.noticiaService.getNoticias();
       this.loading = false;
@@ -74,7 +83,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  // 👉 MÉTODO NUEVO PARA NAVEGAR A ABOUT
+  // 👉 Navegación hacia About
   navegarAAbout() {
     console.log("Realizando operaciones previas...");
     console.log("Navegando a la página About...");
@@ -144,4 +153,5 @@ export class HomePage implements OnInit {
 
     await alert.present();
   }
+
 }

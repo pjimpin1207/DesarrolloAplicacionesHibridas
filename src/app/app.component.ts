@@ -20,4 +20,5 @@ export class AppComponent {
       'information-circle-outline': informationCircleOutline
     });
   }
+  
 }

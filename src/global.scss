@@ -18,7 +18,7 @@
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+/* Optional CSS utils */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
@@ -26,21 +26,19 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 /**
- * Ionic Dark Mode
+ * DARK MODE (DESACTIVADO para evitar pantalla negra)
  * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
+ * Cuando activemos ajustes persistentes lo gestionaremos manualmente.
  */
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* ❌ Esta línea era la que te dejaba la pantalla NEGRA */
+/* @import '@ionic/angular/css/palettes/dark.system.css'; */
 
 body {
   font-family: 'Titillium Web', sans-serif;
 }
 
-/* Opcional: estilos adicionales */
+/* ===== TIPOGRAFÍA ===== */
 ion-title,
 h1, h2, h3, h4, h5 {
   font-weight: 700;
@@ -51,6 +49,7 @@ p, ion-label, ion-input {
   font-weight: 400;
 }
 
+/* ===== TOOLBAR ===== */
 ion-toolbar {
   font-weight: 600;
   letter-spacing: 0.3px;
@@ -58,12 +57,23 @@ ion-toolbar {
   color: white;
 }
 
+/* ===== CARDS ===== */
 ion-card {
   border-radius: 14px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.08);
 }
 
+/* ===== BOTONES ===== */
 ion-button {
   font-weight: 600;
   letter-spacing: 0.4px;
+}
+
+/* ===== FONDO GLOBAL CLARO ===== */
+ion-content {
+  --background: var(--ion-color-light);
+}
+
+body, ion-app {
+  background: var(--ion-color-light) !important;
 }

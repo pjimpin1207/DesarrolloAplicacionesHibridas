@@ -49,20 +49,25 @@ export class NoticiaService {
 
   constructor() {}
 
-  // ✅ Obtener todas las noticias
+  // btener todas las noticias
   getNoticias(): Noticia[] {
     return this.noticias;
   }
 
-  // ✅ Añadir una noticia nueva
+  // Añadir una noticia nueva
   addNoticia(noticia: Noticia) {
     noticia.id = Date.now(); // generar ID único
     noticia.fecha = new Date(); // fecha de creación
     this.noticias.unshift(noticia); // añadir al inicio
   }
 
-  // ✅ Obtener una noticia por su ID (para rutas dinámicas)
+  // btener una noticia por su ID (para rutas dinámicas)
   getNoticiaPorId(id: number): Noticia | undefined {
     return this.noticias.find(n => n.id === id);
   }
+
+  deleteNoticia(id: number) {
+  this.noticias = this.noticias.filter(n => n.id !== id);
+}
+
 }
