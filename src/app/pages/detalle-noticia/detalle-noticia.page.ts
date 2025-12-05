@@ -1,31 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Noticia } from 'src/app/interfaces/noticia';
-import { NoticiaService } from 'src/app/services/noticia.service';
+import { NoticiaService } from '../../services/noticia.service';
+import { Noticia } from '../../interfaces/noticia';
 
 import {
-  IonHeader, IonToolbar, IonButtons, IonBackButton,
-  IonTitle, IonContent, IonBadge, IonButton
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonTitle,
+  IonContent,
+  IonImg,
+  IonBadge  // ← FALTABA ESTO
 } from '@ionic/angular/standalone';
+
 
 @Component({
   selector: 'app-detalle-noticia',
+  standalone: true,
   templateUrl: './detalle-noticia.page.html',
   styleUrls: ['./detalle-noticia.page.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    IonHeader,
-    IonToolbar,
-    IonButtons,
-    IonBackButton,
-    IonTitle,
-    IonContent,
-    IonBadge,
-    IonButton
-  ]
+imports: [
+  CommonModule,
+  RouterLink,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonTitle,
+  IonContent,
+  IonImg,
+  IonBadge   // ← NECESARIO PARA QUE <ion-badge> FUNCIONE
+]
 })
 export class DetalleNoticiaPage implements OnInit {
 
