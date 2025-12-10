@@ -1,24 +1,32 @@
-/* === HERO SECTION === */
+/* ==========================================================
+   🏆 HERO SECTION — Gradiente deportivo minimalista
+   ========================================================== */
+
 .hero-section {
-  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-tertiary));
+  background: linear-gradient(
+    135deg,
+    var(--ion-color-primary),
+    var(--ion-color-tertiary)
+  );
   border-radius: 16px;
   padding: 1.5rem;
-  color: white;
+  color: var(--ion-text-color);
   margin-bottom: 2rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
 }
 
 .hero-text h1 {
   font-size: 1.3rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: var(--ion-color-warning);
+  color: var(--ion-color-secondary);
   margin-bottom: 0.5rem;
 }
 
 .hero-text h2 {
   font-size: 2.2rem;
   font-weight: 800;
+  color: var(--ion-text-color);
 }
 
 .hero-text .accent {
@@ -27,16 +35,20 @@
 
 .hero-text p {
   font-size: 1rem;
-  color: #e5e7eb;
+  color: var(--ion-text-color);
+  opacity: 0.85;
   margin-bottom: 1.2rem;
 }
 
 .hero-image ion-img {
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 15px rgba(0,0,0,0.25);
 }
 
-/* === GRID NOTICIAS === */
+/* ==========================================================
+   📰 GRID DE NOTICIAS
+   ========================================================== */
+
 .news-grid app-noticia-item {
   display: block;
   margin-bottom: 1rem;
@@ -45,16 +57,19 @@
 
 .news-grid app-noticia-item:hover {
   transform: scale(1.02);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.12);
 }
 
-/* === BOTÓN FLOTANTE === */
+/* ==========================================================
+   ➕ BOTÓN FLOTANTE
+   ========================================================== */
+
 ion-fab-button.fab-add {
   --background: var(--ion-color-secondary);
-  --background-hover: color-mix(in srgb, var(--ion-color-secondary) 85%, white);
+  --background-hover: color-mix(in srgb, var(--ion-color-secondary) 90%, white);
   --background-activated: color-mix(in srgb, var(--ion-color-secondary) 70%, black);
   --border-radius: 50%;
-  --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  --box-shadow: 0 6px 18px rgba(0,0,0,0.25);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,22 +80,27 @@ ion-fab-button.fab-add:hover {
   transform: scale(1.1);
 }
 
-/* FORZAR VISIBILIDAD DEL ICONO */
 ion-fab-button.fab-add ion-icon {
   color: #ffffff !important;
   font-size: 28px;
   font-weight: bold;
 }
 
-/* === MODAL === */
+/* ==========================================================
+   🪟 MODAL
+   ========================================================== */
+
 ion-modal {
   --width: 90%;
   --max-width: 600px;
   --border-radius: 16px;
-  --box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+  --box-shadow: 0 4px 25px rgba(0,0,0,0.3);
 }
 
-/* === RESPONSIVE === */
+/* ==========================================================
+   📱 RESPONSIVE
+   ========================================================== */
+
 @media (max-width: 768px) {
   .hero-section {
     text-align: center;
@@ -91,28 +111,26 @@ ion-modal {
   }
 }
 
-/* Animación de entrada suave */
+/* ==========================================================
+   ✨ ANIMACIONES (skeleton + fade)
+   ========================================================== */
+
 .fade-in {
   animation: fadeIn 0.6s ease forwards;
   opacity: 0;
 }
 
 @keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
+  to { opacity: 1; }
 }
 
-/* Animación de salida suave al mostrar el contenido real */
 .fade-out {
   animation: fadeOut 0.4s ease forwards;
   opacity: 1;
 }
 
 @keyframes fadeOut {
-  to {
-    opacity: 0;
-  }
+  to { opacity: 0; }
 }
 
 .skeleton-card {
@@ -120,4 +138,3 @@ ion-modal {
   overflow: hidden;
   margin-bottom: 1rem;
 }
-

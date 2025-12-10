@@ -1,24 +1,23 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { addIcons } from 'ionicons';
-import {
-  add,
-  informationCircleOutline
-} from 'ionicons/icons';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { SettingsService } from './services/settings.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [IonicModule],
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+  standalone: true,
+  imports: [IonApp, IonRouterOutlet]
 })
 export class AppComponent {
-  constructor() {
-    addIcons({
-      add,
-      'information-circle-outline': informationCircleOutline
-    });
+
+  constructor(private settingsService: SettingsService) {}
+
+  async ngOnInit() {
+    await this.cargarPreferencias();
   }
-  
+
+  async cargarPreferencias() {
+    const modoOscuro = await this.settingsService.get('modo_oscuro');
+    document.body.classList.toggle('dark', modoOscuro === true);
+  }
 }

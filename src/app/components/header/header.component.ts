@@ -1,15 +1,27 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { RouterLink } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { informationCircleOutline, settingsOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [
-    IonicModule,
-    RouterModule
-  ],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  imports: [
+    IonHeader, IonToolbar, IonTitle,
+    IonButtons, IonButton, IonIcon,
+    RouterLink
+  ]
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+
+  constructor() {
+    addIcons({
+      informationCircleOutline,
+      settingsOutline
+    });
+  }
+
+}

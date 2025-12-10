@@ -1,6 +1,11 @@
+/* ==========================================================
+   🎨 TARJETA DE NOTICIA — Diseño moderno y deportivo
+   ========================================================== */
+
 .noticia-card {
   border-radius: 14px;
   overflow: hidden;
+  background: var(--ion-card-background);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: flex;
@@ -8,27 +13,47 @@
   height: 100%;
 }
 
+/* Hover con efecto pro */
 .noticia-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* === IMAGEN (más grande y centrada) === */
+/* ==========================================================
+   🖼️ IMAGEN
+   ========================================================== */
+
 ion-img {
   width: 100%;
-  height: 300px; /* antes 230px → más alta */
-  object-fit: cover; /* mantiene proporción */
-  object-position: center top; /* centra el recorte en la parte superior */
+  height: 300px;
+  object-fit: cover;
+  object-position: center top;
   transition: transform 0.4s ease, filter 0.4s ease;
 }
 
-/* Efecto hover ligero y profesional */
+/* Efecto hover */
 .noticia-card:hover ion-img {
   transform: scale(1.03);
   filter: brightness(1.1);
 }
 
-/* === ETIQUETAS === */
+/* ==========================================================
+   📝 TEXTOS — Heredan color del tema claro/oscuro
+   ========================================================== */
+
+.noticia-card ion-card-title,
+.noticia-card ion-card-subtitle,
+.noticia-card h1,
+.noticia-card h2,
+.noticia-card h3,
+.noticia-card p {
+  color: var(--ion-text-color) !important;
+}
+
+/* ==========================================================
+   🏷️ ETIQUETAS
+   ========================================================== */
+
 .categoria {
   color: white;
   font-weight: 700;
@@ -61,9 +86,12 @@ ion-img {
   text-transform: uppercase;
 }
 
-/* === RESPONSIVE === */
+/* ==========================================================
+   📱 RESPONSIVE
+   ========================================================== */
+
 @media (max-width: 768px) {
   ion-img {
-    height: 240px; /* reduce suavemente en móvil */
+    height: 240px;
   }
 }

@@ -1,89 +1,73 @@
-/* ============================================================
-   VARIABLES GLOBALES DE INFO NOW
-   Aquí defines TODOS los colores y estilos base de tu aplicación.
-   Ionic usa estas variables para pintar componentes (botones, cards,
-   fondos, textos, barras superiores...). 
-   ============================================================ */
+/* ==========================================================
+   🎨 MODO CLARO — Tema principal de InfoNow (deportivo minimalista)
+   ========================================================== */
 
 :root {
-  /* ---------------------------------
-     🎨 COLORES PRINCIPALES DEL TEMA
-     Estos son los colores que más verás en botones, acentos,
-     iconos importantes, etc.
-     --------------------------------- */
+  /* Colores principales */
+  --ion-color-primary: #1c7ed6; /* Azul deportivo eléctrico */
+  --ion-color-primary-rgb: 28, 126, 214;
+  --ion-color-primary-contrast: #ffffff;
 
-  --ion-color-primary: #000000;      /* Color principal (botones, header) */
-  --ion-color-primary-rgb: 213, 35, 181;
-
-  --ion-color-secondary: #4de113;    /* Color secundario (toggles, badges) */
-  --ion-color-secondary-rgb: 77, 225, 19;
-
-  --ion-color-tertiary: #2ddc41;     /* Color terciario opcional */
-  --ion-color-tertiary-rgb: 45, 220, 65;
-
-    --ion-background-color: #ffffff;   /* FONDO BLANCO */
-  --ion-color-light: #f4f4f4;
-
-  /* ---------------------------------
-     ✳ COLORES DE ESTADO
-     --------------------------------- */
-  --ion-color-success: #16A34A;      /* Mensajes de éxito */
-  --ion-color-warning: #FFD700;      /* Amarillo para avisos */
-  --ion-color-danger: #E63946;       /* Mensajes de error o alertas */
-
-  /* ---------------------------------
-     🎭 COLORES BASE DE LA INTERFAZ
-     --------------------------------- */
-  --ion-color-dark: #ffffff;         /* Texto oscuro / fondos oscuros */
-  --ion-color-medium: #64748B;       /* Gris medio */
-  --ion-color-light: #F3F4F6;        /* Gris claro (ideal como fondo) */
-
-  /* ---------------------------------
-     📝 COLORES DE CONTRASTE DEL TEXTO
-     IMPORTANTE: Definen el color del texto dentro de los botones.
-     --------------------------------- */
-  --ion-color-primary-contrast: #ffffff;  
+  --ion-color-secondary: #3bbf52; /* Verde deportivo moderno */
+  --ion-color-secondary-rgb: 59, 191, 82;
   --ion-color-secondary-contrast: #ffffff;
-  --ion-color-tertiary-contrast: #ffffff;
-  --ion-color-success-contrast: #ffffff;
-  --ion-color-warning-contrast: #000000;
-  --ion-color-danger-contrast: #ffffff;
-  --ion-color-dark-contrast: #ffffff;
-  --ion-color-medium-contrast: #ffffff;
-  --ion-color-light-contrast: #000000;
 
-  /* ---------------------------------
-     🖊 FUENTE GLOBAL DE LA APP
-     --------------------------------- */
+  --ion-color-tertiary: #228be6; /* Azul más suave */
+  --ion-color-tertiary-rgb: 34, 139, 230;
+  --ion-color-tertiary-contrast: #ffffff;
+
+  /* Otros colores */
+  --ion-color-success: #2f9e44;
+  --ion-color-warning: #f59f00;
+  --ion-color-danger: #d62828;
+  --ion-color-medium: #868e96;
+  --ion-color-light: #f8f9fa;
+  --ion-color-dark: #212529;
+
+  /* Fondo general */
+  --ion-background-color: #f5f7fa; /* Blanco/gris muy suave */
+  --ion-text-color: #1f2937; /* Gris oscuro legible */
+
+  /* Tarjetas */
+  --ion-card-background: #ffffff;
+  --ion-card-border-radius: 14px;
+
+  /* Fuente */
   --ion-font-family: 'Titillium Web', sans-serif;
 }
 
-/* ============================================================
-   🌙 MODO OSCURO
-   Se activa automáticamente cuando el sistema del usuario
-   está en modo oscuro o si tú lo activas manualmente con Settings.
-   ============================================================ */
+/* ==========================================================
+   🌙 MIXIN — Variables reutilizables para el Modo Oscuro
+   ========================================================== */
+@mixin dark-theme-vars {
+  --ion-color-primary: #4dabf7; /* Azul claro moderno */
+  --ion-color-primary-contrast: #0a0a0a;
 
+  --ion-color-secondary: #69db7c; /* Verde claro deportivo */
+  --ion-color-secondary-contrast: #0a0a0a;
+
+  --ion-background-color: #1b1f27; /* Fondo gris azulado deportivo */
+  --ion-text-color: #e7e9ee;
+
+  --ion-card-background: #242a33; /* Tarjetas oscuras elegantes */
+
+  --ion-color-medium: #adb5bd;
+  --ion-color-light: #2f3542;
+}
+
+/* ==========================================================
+   🌙 MODO OSCURO AUTOMÁTICO (según sistema)
+   ========================================================== */
 @media (prefers-color-scheme: dark) {
-  :root {
-    /* ---------------------------------
-       🎨 Colores en modo oscuro
-       Cambia estos para personalizar tu tema dark
-       --------------------------------- */
-
-    --ion-color-primary: #0A3D2E;     /* Versión oscura del primary */
-    --ion-color-secondary: #E96D00;   /* Versión oscura del secondary */
-    --ion-color-tertiary: #1E3A8A;    /* Versión oscura del tertiary */
-
-    --ion-color-success: #22C55E;
-    --ion-color-warning: #FBBF24;
-    --ion-color-danger: #EF4444;
-
-    /* ---------------------------------
-       🖤 COLORES BASE DEL MODO OSCURO
-       --------------------------------- */
-    --ion-color-dark: #0B1120;        /* Fondo general oscuro */
-    --ion-color-medium: #94A3B8;      /* Texto gris claro */
-    --ion-color-light: #1E293B;       /* Cards / fondos medios */
+  body {
+    @include dark-theme-vars;
   }
+}
+
+/* ==========================================================
+   🌙 MODO OSCURO MANUAL (clase .dark activada por Ajustes)
+   ========================================================== */
+
+body.dark {
+  @include dark-theme-vars;
 }

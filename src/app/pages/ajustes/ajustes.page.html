@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
@@ -9,18 +9,30 @@
 
 <ion-content class="ion-padding">
 
-  <ion-item>
-    <ion-label>Modo Oscuro</ion-label>
-    <ion-toggle [(ngModel)]="darkMode"></ion-toggle>
-  </ion-item>
+  <ion-list>
 
-  <ion-item>
-    <ion-label position="floating">Tu nombre</ion-label>
-    <ion-input [(ngModel)]="nombreUsuario"></ion-input>
-  </ion-item>
+    <ion-list-header>Apariencia</ion-list-header>
 
-  <ion-button expand="block" class="ion-margin-top" (click)="guardarCambios()">
-    Guardar ajustes
-  </ion-button>
+    <ion-item>
+      <ion-label>Modo Oscuro</ion-label>
+      <ion-toggle [(ngModel)]="modoOscuro" (ionChange)="cambiarModoOscuro()"></ion-toggle>
+    </ion-item>
+
+    <ion-list-header>Perfil</ion-list-header>
+
+    <ion-item>
+      <ion-label position="stacked">Nombre del usuario</ion-label>
+      <ion-input
+        [(ngModel)]="nombreUsuario"
+        placeholder="Escribe tu nombre">
+      </ion-input>
+    </ion-item>
+
+    <ion-button expand="block" color="primary" class="ion-margin-top"
+                (click)="guardarNombre()">
+      Guardar nombre
+    </ion-button>
+
+  </ion-list>
 
 </ion-content>
