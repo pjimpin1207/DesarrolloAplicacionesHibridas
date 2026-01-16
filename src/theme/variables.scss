@@ -1,18 +1,18 @@
 /* ==========================================================
-   🎨 MODO CLARO — Tema principal de InfoNow (deportivo minimalista)
+   MODO CLARO — Tema principal de InfoNow (deportivo minimalista)
    ========================================================== */
 
 :root {
   /* Colores principales */
-  --ion-color-primary: #1c7ed6; /* Azul deportivo eléctrico */
+  --ion-color-primary: #1c7ed6;
   --ion-color-primary-rgb: 28, 126, 214;
   --ion-color-primary-contrast: #ffffff;
 
-  --ion-color-secondary: #3bbf52; /* Verde deportivo moderno */
+  --ion-color-secondary: #3bbf52;
   --ion-color-secondary-rgb: 59, 191, 82;
   --ion-color-secondary-contrast: #ffffff;
 
-  --ion-color-tertiary: #228be6; /* Azul más suave */
+  --ion-color-tertiary: #228be6;
   --ion-color-tertiary-rgb: 34, 139, 230;
   --ion-color-tertiary-contrast: #ffffff;
 
@@ -25,8 +25,8 @@
   --ion-color-dark: #212529;
 
   /* Fondo general */
-  --ion-background-color: #f5f7fa; /* Blanco/gris muy suave */
-  --ion-text-color: #1f2937; /* Gris oscuro legible */
+  --ion-background-color: #f5f7fa;
+  --ion-text-color: #1f2937;
 
   /* Tarjetas */
   --ion-card-background: #ffffff;
@@ -37,26 +37,26 @@
 }
 
 /* ==========================================================
-   🌙 MIXIN — Variables reutilizables para el Modo Oscuro
+   MIXIN — Variables reutilizables para el Modo Oscuro
    ========================================================== */
 @mixin dark-theme-vars {
-  --ion-color-primary: #4dabf7; /* Azul claro moderno */
+  --ion-color-primary: #4dabf7;
   --ion-color-primary-contrast: #0a0a0a;
 
-  --ion-color-secondary: #69db7c; /* Verde claro deportivo */
+  --ion-color-secondary: #69db7c;
   --ion-color-secondary-contrast: #0a0a0a;
 
-  --ion-background-color: #1b1f27; /* Fondo gris azulado deportivo */
+  --ion-background-color: #1b1f27;
   --ion-text-color: #e7e9ee;
 
-  --ion-card-background: #242a33; /* Tarjetas oscuras elegantes */
+  --ion-card-background: #242a33;
 
   --ion-color-medium: #adb5bd;
   --ion-color-light: #2f3542;
 }
 
 /* ==========================================================
-   🌙 MODO OSCURO AUTOMÁTICO (según sistema)
+   MODO OSCURO AUTOMÁTICO (según sistema)
    ========================================================== */
 @media (prefers-color-scheme: dark) {
   body {
@@ -65,7 +65,7 @@
 }
 
 /* ==========================================================
-   🌙 MODO OSCURO MANUAL (clase .dark activada por Ajustes)
+   MODO OSCURO MANUAL (clase .dark)
    ========================================================== */
 
 body.dark {
