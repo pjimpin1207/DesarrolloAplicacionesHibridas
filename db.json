@@ -2,30 +2,39 @@
   "noticias": [
     {
       "id": "1",
-      "titulo": "El Real Madrid gana el clásico en el último minuto",
-      "descripcion": "Un gol en el descuento da la victoria al Real Madrid en un partido vibrante.",
+      "titulo": "Arbelo nuevo entrenador del Real Madrid",
+      "descripcion": "El exjugador asume el cargo tras la salida de Xabi Alonso.",
       "categoria": "fútbol",
-      "imagen": "https://picsum.photos/800/400?random=1",
-      "fecha": "2026-01-15",
+      "imagen": "https://img2.rtve.es/n/16600224?w=1600",
+      "fecha": "2026-01-12",
       "urgente": true
     },
     {
       "id": "2",
-      "titulo": "España se clasifica para la final del Eurobasket",
-      "descripcion": "La selección española vence en semifinales con una gran actuación colectiva.",
-      "categoria": "baloncesto",
-      "imagen": "https://picsum.photos/800/400?random=2",
+      "titulo": "El albacete gana al Real Madrid en Copa del Rey",
+      "descripcion": "El albacete gana al Real Madrid en Copa del Rey con una gran actuación colectiva y un fracaso en el primer partido de Arbeloa.",
+      "categoria": "fútbol",
+      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm_SwMXuC0zHqqDCnL_l-ch8QjEDtqZxTLkg&s",
       "fecha": "2026-01-14",
       "urgente": false
     },
     {
       "id": "3",
-      "titulo": "Alcaraz avanza a semifinales del Open de Australia",
-      "descripcion": "El tenista español continúa su camino al título tras un sólido partido.",
-      "categoria": "tenis",
-      "imagen": "https://picsum.photos/800/400?random=3",
-      "fecha": "2026-01-13",
+      "titulo": "El FC Barcelona le gana al lider de segunda división en su duelo de Copa del Rey",
+      "descripcion": "El FC Barcelona se impuso al Racing de Santader con un marcador de 2-0 en el partido correspondiente a la Copa del Rey, demostrando su superioridad en el campo y asegurando su avance en la competición.",
+      "categoria": "fútbol",
+      "imagen": "https://www.fcbarcelona.com/photo-resources/2026/01/15/4668bd7f-49bb-4ce4-8144-9d80909cb754/_MGA1884.jpg?width=1200&height=525",
+      "fecha": "2026-01-15",
       "urgente": false
+    },
+    {
+      "id": "b909",
+      "titulo": "Kalumba ya está en Mallorca",
+      "descripcion": "El primer extremo ya está en la isla, el futbolista Justin Kalumba es el primer fichaje del mercado invernal para Jagoba Arrasate. Tal y como avanzó infoNow hace una semana, el jugador llevaba semanas atado por el Mallorca de cara al verano, pero el club se estaba planteando adelantar la operación a este mercado y así ha sido. \nKalumba ha aterrizado este mediodía en la isla, ha pasado reconocimiento médico y se convierte en la primera incorporación del mercado al plantel bermellón. Ahora el plan en las oficinas de Son Moix sigue siendo el mismo que avanzaba este mismo diario; traer un refuerzo más (o incluso 2), siendo la prioridad el marroquí Ilias Akomach que disputará con su selección la final de la Copa África este domingo. La parcela ofensiva suma a la causa el primer efectivo del mercado a la espera de más movimientos.",
+      "imagen": "https://objetos-xlk.estaticos-marca.com/files/article_660_widen_webp/uploads/2026/01/09/6961406e11db0.webp",
+      "esUrgente": false,
+      "categoria": "Fútbol",
+      "fecha": "2026-01-16T09:19:10.902Z"
     }
   ],
   "usuarios": [

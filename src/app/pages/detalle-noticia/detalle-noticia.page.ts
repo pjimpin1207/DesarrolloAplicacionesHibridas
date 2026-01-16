@@ -20,7 +20,6 @@ import {
 
 import { ToastController, AlertController } from '@ionic/angular';
 
-
 @Component({
   selector: 'app-detalle-noticia',
   standalone: true,
@@ -56,25 +55,30 @@ export class DetalleNoticiaPage implements OnInit {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (id) {
-      this.noticia = this.noticiaService.getNoticiaPorId(Number(id));
+      try {
+        // 👉 CAMBIO: Esperamos (await) la respuesta del servidor
+        this.noticia = await this.noticiaService.getNoticiaPorId(Number(id));
+      } catch (error) {
+        // 👉 Si hay error (ej: 404 no encontrado), entra aquí
+        console.error('Error al cargar la noticia:', error);
+        this.mostrarMensajeError();
+      }
     }
+  }
 
-    // Manejo de error → noticia no encontrada
-    if (!this.noticia) {
-      const toast = await this.toastController.create({
-        message: 'Noticia no encontrada',
-        duration: 2000,
-        color: 'danger'
-      });
+  // He separado tu lógica de error para limpiar el ngOnInit y usarla en el catch
+  async mostrarMensajeError() {
+    const toast = await this.toastController.create({
+      message: 'Noticia no encontrada',
+      duration: 2000,
+      color: 'danger'
+    });
 
-      await toast.present();
+    await toast.present();
 
-      setTimeout(() => {
-        this.router.navigate(['/home']);
-      }, 2000);
-
-      return;
-    }
+    setTimeout(() => {
+      this.router.navigate(['/home']);
+    }, 2000);
   }
 
   // Botón Eliminar con confirmación
@@ -89,7 +93,8 @@ export class DetalleNoticiaPage implements OnInit {
           role: 'destructive',
           handler: async () => {
             if (this.noticia) {
-              this.noticiaService.deleteNoticia(this.noticia.id);
+              // 👉 CAMBIO: Añadimos await porque el servicio ahora es asíncrono
+              await this.noticiaService.deleteNoticia(this.noticia.id);
             }
 
             const toast = await this.toastController.create({

@@ -7,8 +7,6 @@ import { HeaderComponent } from '../components/header/header.component';
 import { Noticia } from '../interfaces/noticia';
 import { NoticiaService } from '../services/noticia.service';
 import { RouterLink, Router } from '@angular/router';
-
-// 👉 Importamos el servicio de ajustes
 import { SettingsService } from '../services/settings.service';
 
 @Component({
@@ -28,8 +26,6 @@ import { SettingsService } from '../services/settings.service';
 export class HomePage implements OnInit {
 
   noticias: Noticia[] = [];
-
-  // 👉 NUEVA VARIABLE PARA EL SALUDO
   nombreUsuario: string = '';
 
   nuevaNoticia: Noticia = {
@@ -50,24 +46,25 @@ export class HomePage implements OnInit {
     private toastController: ToastController,
     private alertController: AlertController,
     private animationCtrl: AnimationController,
-
-    // 👉 Router para navegar
     private router: Router,
-
-    // 👉 Servicio de ajustes para leer el nombre guardado
     private settingsService: SettingsService
   ) {}
 
   async ngOnInit() {
-
-    // 👉 Recuperamos el nombre del usuario al iniciar
     this.nombreUsuario = await this.settingsService.getUserName();
+  }
 
-    // Cargar noticias simulando carga
-    setTimeout(() => {
-      this.noticias = this.noticiaService.getNoticias();
+  async ionViewWillEnter() {
+    await this.cargarNoticias();
+  }
+
+  async cargarNoticias() {
+    try {
+      this.noticias = await this.noticiaService.getNoticias();
       this.loading = false;
-    }, 1000);
+    } catch (error) {
+      console.error('Error al cargar las noticias:', error);
+    }
   }
 
   ionViewDidEnter() {
@@ -83,11 +80,9 @@ export class HomePage implements OnInit {
     }
   }
 
-  // 👉 Navegación hacia About
   navegarAAbout() {
     console.log("Realizando operaciones previas...");
     console.log("Navegando a la página About...");
-
     this.router.navigate(['/about']);
   }
 
@@ -122,30 +117,39 @@ export class HomePage implements OnInit {
         {
           text: 'Publicar',
           handler: async () => {
+            // 👉 INICIO DEL CAMBIO DEL PASO 2
+            try {
+              // 1. Llamamos al servicio pasando EL OBJETO COMPLETO y esperamos (await)
+              await this.noticiaService.addNoticia(this.nuevaNoticia);
 
-            // 👉 Añadir noticia en el servicio
-            this.noticiaService.addNoticia(this.nuevaNoticia);
+              // 2. Limpiamos el formulario reseteando el objeto
+              this.nuevaNoticia = {
+                id: 0,
+                titulo: '',
+                descripcion: '',
+                imagen: '',
+                esUrgente: false,
+                categoria: '',
+                fecha: new Date()
+              };
 
-            // 👉 Recargar noticias desde el servicio
-            this.noticias = this.noticiaService.getNoticias();
+              // 3. Recargamos la lista desde el servidor para mostrar los cambios
+              await this.cargarNoticias();
 
-            // 👉 Resetear el formulario
-            this.nuevaNoticia = {
-              id: 0,
-              titulo: '',
-              descripcion: '',
-              imagen: '',
-              esUrgente: false,
-              categoria: '',
-              fecha: new Date()
-            };
+              // (Opcional) Cerramos el modal si estaba abierto
+              this.cerrarModal();
 
-            const toast = await this.toastController.create({
-              message: 'Noticia publicada correctamente',
-              duration: 2500,
-              color: 'success',
-            });
-            await toast.present();
+              const toast = await this.toastController.create({
+                message: 'Noticia publicada correctamente',
+                duration: 2500,
+                color: 'success',
+              });
+              await toast.present();
+
+            } catch (error) {
+              console.error('Error al guardar:', error);
+            }
+            // 👈 FIN DEL CAMBIO
           }
         }
       ]
@@ -153,5 +157,4 @@ export class HomePage implements OnInit {
 
     await alert.present();
   }
-
 }
