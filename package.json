@@ -10,8 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "api": "json-server --watch db.json" 
-
+    "api": "json-server --watch db.json"
   },
   "private": true,
   "dependencies": {
@@ -43,7 +42,7 @@
     "@angular-eslint/eslint-plugin-template": "^20.0.0",
     "@angular-eslint/schematics": "^20.0.0",
     "@angular-eslint/template-parser": "^20.0.0",
-    "@angular/cli": "^20.0.0",
+    "@angular/cli": "20.3.14",
     "@angular/compiler-cli": "^20.0.0",
     "@angular/language-service": "^20.0.0",
     "@capacitor/cli": "7.4.3",
@@ -67,4 +66,3 @@
   },
   "description": "An Ionic project"
 }
-

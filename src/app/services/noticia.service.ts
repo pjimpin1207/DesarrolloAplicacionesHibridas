@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Noticia } from '../interfaces/noticia';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class NoticiaService {
 
-  // 🔹 Lista inicial de noticias (las que tenías antes)
+  // 🔹 URL de la API (json-server)
+  private apiUrl = 'http://localhost:3000/noticias';
+
+  // 🔹 Noticias locales (fallback / mientras no uses API)
   private noticias: Noticia[] = [
     {
       id: 1,
@@ -47,27 +51,33 @@ export class NoticiaService {
     }
   ];
 
-  constructor() {}
+  // ✅ PASO 2: Inyección de HttpClient
+  constructor(private http: HttpClient) {}
 
-  // btener todas las noticias
-  getNoticias(): Noticia[] {
-    return this.noticias;
+  // ============================
+  // MÉTODOS (SIN CAMBIAR NOMBRES)
+  // ============================
+
+  // Obtener todas las noticias
+  getNoticias(): Observable<Noticia[]> {
+    return this.http.get<Noticia[]>(this.apiUrl);
+    // 👉 si NO usas API todavía, usa:
+    // return of(this.noticias);
+  }
+
+  // Obtener noticia por ID
+  getNoticiaPorId(id: number): Observable<Noticia> {
+    return this.http.get<Noticia>(`${this.apiUrl}/${id}`);
   }
 
   // Añadir una noticia nueva
-  addNoticia(noticia: Noticia) {
-    noticia.id = Date.now(); // generar ID único
-    noticia.fecha = new Date(); // fecha de creación
-    this.noticias.unshift(noticia); // añadir al inicio
+  addNoticia(noticia: Noticia): Observable<Noticia> {
+    noticia.fecha = new Date();
+    return this.http.post<Noticia>(this.apiUrl, noticia);
   }
 
-  // btener una noticia por su ID (para rutas dinámicas)
-  getNoticiaPorId(id: number): Noticia | undefined {
-    return this.noticias.find(n => n.id === id);
+  // Eliminar una noticia
+  deleteNoticia(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-
-  deleteNoticia(id: number) {
-  this.noticias = this.noticias.filter(n => n.id !== id);
-}
-
 }
