@@ -8,6 +8,8 @@ import { Noticia } from '../interfaces/noticia';
 import { NoticiaService } from '../services/noticia.service';
 import { RouterLink, Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
+import { addIcons } from 'ionicons';
+import { trash, add, create } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -48,7 +50,10 @@ export class HomePage implements OnInit {
     private animationCtrl: AnimationController,
     private router: Router,
     private settingsService: SettingsService
-  ) {}
+  ) {
+    // Registramos los iconos: trash (borrar), add (añadir) y create (editar)
+    addIcons({ trash, add, create });
+  }
 
   async ngOnInit() {
     this.nombreUsuario = await this.settingsService.getUserName();
@@ -86,7 +91,20 @@ export class HomePage implements OnInit {
     this.router.navigate(['/about']);
   }
 
+  // Abre el modal vacío para crear
   abrirModal() {
+    // Aseguramos que esté limpio por si acaso
+    this.nuevaNoticia = {
+      id: 0, titulo: '', descripcion: '', imagen: '',
+      esUrgente: false, categoria: '', fecha: new Date()
+    };
+    this.modalAbierto = true;
+  }
+
+  // NUEVO: Carga los datos de una noticia existente y abre el modal
+  prepararEdicion(noticia: Noticia) {
+    // Copiamos la noticia para no modificar la lista visualmente antes de guardar
+    this.nuevaNoticia = { ...noticia };
     this.modalAbierto = true;
   }
 
@@ -110,19 +128,22 @@ export class HomePage implements OnInit {
     }
 
     const alert = await this.alertController.create({
-      header: 'Confirmar publicación',
-      message: `¿Deseas publicar la noticia "<strong>${this.nuevaNoticia.titulo}</strong>"?`,
+      header: 'Confirmar',
+      message: `¿Deseas guardar los cambios?`,
       buttons: [
         { text: 'Cancelar', role: 'cancel' },
         {
-          text: 'Publicar',
+          text: 'Guardar',
           handler: async () => {
-            // 👉 INICIO DEL CAMBIO DEL PASO 2
             try {
-              // 1. Llamamos al servicio pasando EL OBJETO COMPLETO y esperamos (await)
-              await this.noticiaService.addNoticia(this.nuevaNoticia);
+              // CAMBIO: Si tiene ID > 0 es Editar (PUT), si no es Crear (POST)
+              if (this.nuevaNoticia.id && this.nuevaNoticia.id !== 0) {
+                await this.noticiaService.updateNoticia(this.nuevaNoticia);
+              } else {
+                await this.noticiaService.addNoticia(this.nuevaNoticia);
+              }
 
-              // 2. Limpiamos el formulario reseteando el objeto
+              // Reseteamos
               this.nuevaNoticia = {
                 id: 0,
                 titulo: '',
@@ -133,14 +154,11 @@ export class HomePage implements OnInit {
                 fecha: new Date()
               };
 
-              // 3. Recargamos la lista desde el servidor para mostrar los cambios
               await this.cargarNoticias();
-
-              // (Opcional) Cerramos el modal si estaba abierto
               this.cerrarModal();
 
               const toast = await this.toastController.create({
-                message: 'Noticia publicada correctamente',
+                message: 'Operación realizada correctamente',
                 duration: 2500,
                 color: 'success',
               });
@@ -149,7 +167,6 @@ export class HomePage implements OnInit {
             } catch (error) {
               console.error('Error al guardar:', error);
             }
-            // 👈 FIN DEL CAMBIO
           }
         }
       ]
@@ -157,4 +174,14 @@ export class HomePage implements OnInit {
 
     await alert.present();
   }
+
+  async borrarNoticia(id: number) {
+    try {
+      await this.noticiaService.deleteNoticia(id);
+      await this.cargarNoticias();
+    } catch (error) {
+      console.error('Error al borrar:', error);
+    }
+  }
+
 }

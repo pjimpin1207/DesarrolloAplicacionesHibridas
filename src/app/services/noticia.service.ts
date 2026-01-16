@@ -11,51 +11,38 @@ export class NoticiaService {
   // 🔹 URL base de JSON Server
   private apiUrl = 'http://localhost:3000/noticias';
 
-  // 🔹 Inyectamos HttpClient
   constructor(private http: HttpClient) {}
 
-  /**
-   * =====================================
-   * GET → Obtener TODAS las noticias
-   * =====================================
-   */
+  // ... (Tus métodos getNoticias, getNoticiaPorId y addNoticia se quedan igual) ...
+  
   async getNoticias(): Promise<Noticia[]> {
-    return firstValueFrom(
-      this.http.get<Noticia[]>(this.apiUrl)
-    );
+    return firstValueFrom(this.http.get<Noticia[]>(this.apiUrl));
   }
 
-  /**
-   * =====================================
-   * GET → Obtener noticia por ID
-   * =====================================
-   */
   async getNoticiaPorId(id: number): Promise<Noticia> {
     const url = `${this.apiUrl}/${id}`;
-    return firstValueFrom(
-      this.http.get<Noticia>(url)
-    );
+    return firstValueFrom(this.http.get<Noticia>(url));
+  }
+
+  async addNoticia(noticia: any): Promise<Noticia> {
+    noticia.fecha = new Date();
+    const { id, ...noticiaSinId } = noticia;
+    return firstValueFrom(this.http.post<Noticia>(this.apiUrl, noticiaSinId));
   }
 
   /**
    * =====================================
-   * POST → Añadir noticia nueva
+   * PUT → Actualizar noticia existente
    * =====================================
+   * Se envía el objeto completo con los cambios ya aplicados.
    */
-  // Cambiamos el tipo a 'any' como sugiere el tutorial para poder desestructurar fácilmente
-  async addNoticia(noticia: any): Promise<Noticia> {
-    
-    // Aseguramos que tenga fecha actual antes de enviar
-    noticia.fecha = new Date();
+  async updateNoticia(noticia: Noticia): Promise<Noticia> {
+    // Construimos la URL específica con el ID de la noticia
+    const url = `${this.apiUrl}/${noticia.id}`;
 
-    // 👉 1. Eliminamos el ID temporal (0) antes de enviar.
-    // Creamos una copia del objeto sin el campo 'id'.
-    const { id, ...noticiaSinId } = noticia;
-
-    // 👉 2. Hacemos la petición POST enviando el objeto limpio
-    // JSON Server se encargará de asignarle un ID nuevo y único.
+    // Hacemos la petición PUT enviando el objeto modificado
     return firstValueFrom(
-      this.http.post<Noticia>(this.apiUrl, noticiaSinId)
+      this.http.put<Noticia>(url, noticia)
     );
   }
 
@@ -66,7 +53,10 @@ export class NoticiaService {
    */
   async deleteNoticia(id: number): Promise<void> {
     const url = `${this.apiUrl}/${id}`;
-    await firstValueFrom(
+    
+    // Hacemos la petición DELETE.
+    // firstValueFrom convierte el Observable en Promesa.
+    return firstValueFrom(
       this.http.delete<void>(url)
     );
   }

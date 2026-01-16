@@ -2,14 +2,12 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <!-- SECCIÓN HERO -->
   <ion-grid class="hero-section">
     <ion-row class="ion-align-items-center">
       <ion-col size="12" size-md="6" class="hero-text">
 
         <h1>Bienvenido a <span class="accent">InfoNow</span></h1>
 
-        <!-- ⭐ NUEVO SALUDO PERSONALIZADO -->
         <p *ngIf="nombreUsuario" class="saludo-usuario">
           Hola, <strong>{{ nombreUsuario }}</strong> 👋
         </p>
@@ -31,35 +29,28 @@
     </ion-row>
   </ion-grid>
 
-  <!-- BOTÓN EJEMPLO PARA NAVEGAR A ABOUT -->
   <ion-button (click)="navegarAAbout()">
-    Ir a About (con lógica)
+    Ir a About
   </ion-button>
 
-  <!-- SKELETONS DE CARGA -->
   <ion-grid *ngIf="loading" class="news-grid fade-in">
     <ion-row>
       <ion-col size="12" size-sm="6" size-lg="4" *ngFor="let i of [1,2,3,4,5,6]">
-
         <ion-card class="skeleton-card">
           <ion-skeleton-text animated style="width: 100%; height: 220px; border-radius: 12px;"></ion-skeleton-text>
-
           <ion-card-header>
             <ion-skeleton-text animated style="width: 85%; height: 20px; margin-bottom: 8px;"></ion-skeleton-text>
             <ion-skeleton-text animated style="width: 45%; height: 14px;"></ion-skeleton-text>
           </ion-card-header>
-
           <ion-card-content>
             <ion-skeleton-text animated style="width: 100%; height: 14px; margin-bottom: 6px;"></ion-skeleton-text>
             <ion-skeleton-text animated style="width: 80%; height: 14px;"></ion-skeleton-text>
           </ion-card-content>
         </ion-card>
-
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <!-- GRID DE NOTICIAS -->
   <ion-grid *ngIf="!loading && noticias.length > 0" class="news-grid">
     <ion-row>
 
@@ -69,37 +60,68 @@
         size-lg="4"
         *ngFor="let noticia of noticias">
 
-        <!-- ROUTERLINK A DETALLE-NOTICIA -->
-        <app-noticia-item
-          [noticia]="noticia"
-          [routerLink]="['/detalle-noticia', noticia.id]"
-          style="cursor: pointer">
-        </app-noticia-item>
+        <ion-card class="news-card">
+          
+          <div *ngIf="noticia.imagen" style="height: 180px; overflow: hidden; position: relative;">
+            <img [src]="noticia.imagen" style="width: 100%; height: 100%; object-fit: cover;">
+            <ion-badge color="primary" style="position: absolute; top: 10px; right: 10px;">
+              {{ noticia.categoria }}
+            </ion-badge>
+          </div>
+
+          <ion-card-header>
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+              
+              <ion-card-title class="ion-text-wrap" style="font-size: 1.1rem; font-weight: bold;">
+                {{ noticia.titulo }}
+              </ion-card-title>
+
+              <div style="display: flex;">
+                
+                <ion-button fill="clear" color="primary" (click)="prepararEdicion(noticia)">
+                  <ion-icon slot="icon-only" name="create"></ion-icon>
+                </ion-button>
+
+                <ion-button fill="clear" color="medium" (click)="borrarNoticia(noticia.id)">
+                  <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-button>
+
+              </div>
+            </div>
+            
+            <ion-card-subtitle>
+              {{ noticia.fecha | date:'shortDate' }} 
+              <span *ngIf="noticia.esUrgente" style="color: var(--ion-color-danger)">🔥 Urgente</span>
+            </ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <p>{{ noticia.descripcion }}</p>
+          </ion-card-content>
+        
+        </ion-card>
 
       </ion-col>
 
     </ion-row>
   </ion-grid>
 
-  <!-- MENSAJE SI NO HAY NOTICIAS -->
   <div *ngIf="!loading && noticias.length === 0" class="mensaje-vacio">
     <p>No hay noticias disponibles en este momento.</p>
     <p>¡Publica la primera!</p>
   </div>
 
-  <!-- BOTÓN FLOTANTE -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button class="fab-add" (click)="abrirModal()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <!-- MODAL PARA CREAR NOTICIA -->
   <ion-modal [isOpen]="modalAbierto" (didDismiss)="cerrarModal()">
     <ng-template>
       <ion-header>
         <ion-toolbar color="primary">
-          <ion-title>Crear noticia</ion-title>
+          <ion-title>{{ nuevaNoticia.id === 0 ? 'Crear Noticia' : 'Editar Noticia' }}</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="cerrarModal()">Cerrar</ion-button>
           </ion-buttons>
@@ -108,7 +130,7 @@
 
       <ion-content class="ion-padding">
 
-        <form (ngSubmit)="agregarNoticia(); cerrarModal()">
+        <form (ngSubmit)="agregarNoticia()">
 
           <ion-item>
             <ion-label position="floating">Título</ion-label>
@@ -143,7 +165,7 @@
           </ion-item>
 
           <ion-button expand="block" type="submit" color="secondary" shape="round" class="mt-3">
-            Publicar noticia
+             {{ nuevaNoticia.id === 0 ? 'Publicar noticia' : 'Guardar cambios' }}
           </ion-button>
 
         </form>
