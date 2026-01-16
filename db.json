@@ -1,0 +1,41 @@
+{
+  "noticias": [
+    {
+      "id": "1",
+      "titulo": "El Real Madrid gana el clásico en el último minuto",
+      "descripcion": "Un gol en el descuento da la victoria al Real Madrid en un partido vibrante.",
+      "categoria": "fútbol",
+      "imagen": "https://picsum.photos/800/400?random=1",
+      "fecha": "2026-01-15",
+      "urgente": true
+    },
+    {
+      "id": "2",
+      "titulo": "España se clasifica para la final del Eurobasket",
+      "descripcion": "La selección española vence en semifinales con una gran actuación colectiva.",
+      "categoria": "baloncesto",
+      "imagen": "https://picsum.photos/800/400?random=2",
+      "fecha": "2026-01-14",
+      "urgente": false
+    },
+    {
+      "id": "3",
+      "titulo": "Alcaraz avanza a semifinales del Open de Australia",
+      "descripcion": "El tenista español continúa su camino al título tras un sólido partido.",
+      "categoria": "tenis",
+      "imagen": "https://picsum.photos/800/400?random=3",
+      "fecha": "2026-01-13",
+      "urgente": false
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "nombre": "Pablo",
+      "rol": "editor"
+    }
+  ],
+  "ajustes": {
+    "modoOscuro": false
+  }
+}
