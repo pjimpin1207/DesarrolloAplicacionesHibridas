@@ -1,7 +1,4 @@
-/* ==========================================================
-   🎨 TARJETA DE NOTICIA — Diseño moderno y deportivo
-   ========================================================== */
-
+// Tarjeta de la noticia
 .noticia-card {
   border-radius: 14px;
   overflow: hidden;
@@ -13,15 +10,14 @@
   height: 100%;
 }
 
+
 /* Hover con efecto pro */
 .noticia-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* ==========================================================
-   🖼️ IMAGEN
-   ========================================================== */
+// Imagen
 
 ion-img {
   width: 100%;
@@ -37,10 +33,7 @@ ion-img {
   filter: brightness(1.1);
 }
 
-/* ==========================================================
-   📝 TEXTOS — Heredan color del tema claro/oscuro
-   ========================================================== */
-
+// Textos
 .noticia-card ion-card-title,
 .noticia-card ion-card-subtitle,
 .noticia-card h1,
@@ -50,10 +43,7 @@ ion-img {
   color: var(--ion-text-color) !important;
 }
 
-/* ==========================================================
-   🏷️ ETIQUETAS
-   ========================================================== */
-
+// Etiquetas
 .categoria {
   color: white;
   font-weight: 700;
@@ -65,15 +55,15 @@ ion-img {
 }
 
 .categoria.fútbol {
-  background-color: #16A34A; /* verde césped */
+  background-color: #16A34A;
 }
 
 .categoria.baloncesto {
-  background-color: #EA580C; /* naranja balón */
+  background-color: #EA580C;
 }
 
 .categoria.tenis {
-  background-color: #2563EB; /* azul pista */
+  background-color: #2563EB;
 }
 
 .urgente {
@@ -86,9 +76,7 @@ ion-img {
   text-transform: uppercase;
 }
 
-/* ==========================================================
-   📱 RESPONSIVE
-   ========================================================== */
+// responsive
 
 @media (max-width: 768px) {
   ion-img {

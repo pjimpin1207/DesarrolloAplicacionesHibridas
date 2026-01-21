@@ -10,20 +10,10 @@
       "urgente": true
     },
     {
-      "id": "2",
-      "titulo": "El albacete gana al Real Madrid en Copa del Rey",
-      "descripcion": "El albacete gana al Real Madrid en Copa del Rey con una gran actuación colectiva y un fracaso en el primer partido de Arbeloa.",
-      "categoria": "fútbol",
-      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm_SwMXuC0zHqqDCnL_l-ch8QjEDtqZxTLkg&s",
-      "fecha": "2026-01-14",
-      "urgente": false,
-      "esUrgente": false
-    },
-    {
       "id": "3",
       "titulo": "El FC Barcelona le gana al lider de segunda división en su duelo de Copa del Rey",
       "descripcion": "El FC Barcelona se impuso al Racing de Santader con un marcador de 2-0 en el partido correspondiente a la Copa del Rey, demostrando su superioridad en el campo y asegurando su avance en la competición.",
-      "categoria": "fútbol",
+      "categoria": "Fútbol",
       "imagen": "https://www.fcbarcelona.com/photo-resources/2026/01/15/4668bd7f-49bb-4ce4-8144-9d80909cb754/_MGA1884.jpg?width=1200&height=525",
       "fecha": "2026-01-15",
       "urgente": false

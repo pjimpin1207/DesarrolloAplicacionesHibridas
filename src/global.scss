@@ -31,7 +31,7 @@
  * Cuando activemos ajustes persistentes lo gestionaremos manualmente.
  */
 
-/* ❌ Esta línea era la que te dejaba la pantalla NEGRA */
+/* Esta línea deja la pantalla NEGRA */
 /* @import '@ionic/angular/css/palettes/dark.system.css'; */
 
 body {
@@ -60,7 +60,7 @@ ion-toolbar {
 /* ===== CARDS ===== */
 ion-card {
   border-radius: 14px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 3px 6px rgba(187, 29, 29, 0.08);
 }
 
 /* ===== BOTONES ===== */

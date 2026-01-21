@@ -18,9 +18,7 @@ import { trash, add, create } from 'ionicons/icons';
     IonicModule,
     CommonModule,
     FormsModule,
-    NoticiaItemComponent,
     HeaderComponent,
-    RouterLink
   ],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss']
@@ -175,13 +173,44 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
-  async borrarNoticia(id: number) {
-    try {
-      await this.noticiaService.deleteNoticia(id);
-      await this.cargarNoticias();
-    } catch (error) {
-      console.error('Error al borrar:', error);
-    }
+async borrarNoticia(id: number) {
+    const alert = await this.alertController.create({
+      header: 'Eliminar noticia',
+      message: '¿Estás seguro de que quieres eliminar esta noticia? Esta acción no se puede deshacer.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive', // Esto suele poner el texto en rojo en iOS
+          handler: async () => {
+            try {
+              // 1. Llamamos al servicio para borrar
+              await this.noticiaService.deleteNoticia(id);
+              
+              // 2. Recargamos la lista
+              await this.cargarNoticias();
+
+              // 3. Mostramos feedback
+              const toast = await this.toastController.create({
+                message: 'Noticia eliminada correctamente',
+                duration: 2000,
+                color: 'success'
+              });
+              await toast.present();
+
+            } catch (error) {
+              console.error('Error al borrar:', error);
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }
