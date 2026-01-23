@@ -12,8 +12,6 @@ export class NoticiaService {
   private apiUrl = 'http://localhost:3000/noticias';
 
   constructor(private http: HttpClient) {}
-
-  // ... (Tus métodos getNoticias, getNoticiaPorId y addNoticia se quedan igual) ...
   
   async getNoticias(): Promise<Noticia[]> {
     return firstValueFrom(this.http.get<Noticia[]>(this.apiUrl));
@@ -30,12 +28,8 @@ export class NoticiaService {
     return firstValueFrom(this.http.post<Noticia>(this.apiUrl, noticiaSinId));
   }
 
-  /**
-   * =====================================
-   * PUT → Actualizar noticia existente
-   * =====================================
-   * Se envía el objeto completo con los cambios ya aplicados.
-   */
+
+  //Actualizar noticia existente con PUT
   async updateNoticia(noticia: Noticia): Promise<Noticia> {
     // Construimos la URL específica con el ID de la noticia
     const url = `${this.apiUrl}/${noticia.id}`;

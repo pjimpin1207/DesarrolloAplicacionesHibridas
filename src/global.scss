@@ -69,11 +69,60 @@ ion-button {
   letter-spacing: 0.4px;
 }
 
-/* ===== FONDO GLOBAL CLARO ===== */
-ion-content {
+/* ===== FONDO GLOBAL ===== 
+   (He comentado esto porque entraba en conflicto con el Modo Oscuro del Home)
+   Si lo dejas activo, el fondo gris oscuro del Home no se ve.
+*/
+/* ion-content {
   --background: var(--ion-color-light);
 }
 
 body, ion-app {
   background: var(--ion-color-light) !important;
+} 
+*/
+
+
+/* =========================================================
+   SOLUCIÓN AL PROBLEMA DE CATEGORÍAS (ION-SELECT / ALERT)
+   ========================================================= */
+
+/* Forzamos que las alertas (ventanas emergentes) sean oscuras con texto blanco */
+ion-alert {
+  --background: #1e1e1e; /* Mismo gris oscuro que tus tarjetas */
+  --backdrop-opacity: 0.6;
+
+  .alert-wrapper {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    border-radius: 16px;
+  }
+
+  /* Título de la alerta (ej: "Categoría") */
+  .alert-title {
+    color: #ffffff !important;
+  }
+
+  /* Texto de las opciones (Fútbol, Baloncesto...) */
+  .alert-radio-label {
+    color: #e0e0e0 !important; /* Blanco hueso */
+  }
+
+  /* Botones de Cancelar/OK */
+  .alert-button {
+    color: var(--ion-color-primary) !important;
+  }
+  
+  /* Círculo de selección (Radio button) */
+  [aria-checked="true"] .alert-radio-icon {
+    border-color: var(--ion-color-primary) !important;
+  }
+  .alert-radio-inner {
+    background-color: var(--ion-color-primary) !important;
+  }
+}
+
+/* Lo mismo para Action Sheets y Popovers por si los usas */
+ion-action-sheet, ion-popover {
+  --background: #1e1e1e;
+  --color: #ffffff;
 }

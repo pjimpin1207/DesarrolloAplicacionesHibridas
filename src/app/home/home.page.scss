@@ -1,21 +1,36 @@
-/* 1. Fondo general de la pantalla (Gris muy oscuro para contraste) */
+/* Fondo general de la pantalla*/
 ion-content {
-  --background: #282f35; 
+  --background: #212324; 
 }
 
-/* 2. Estilo de la Tarjeta de Noticia */
+/* Estilo tarjeta de las noticias */
 .news-card {
   /* Fondo de la tarjeta */
   --background: #1e1e1e; 
   
-  /* Color de texto base */
+  /* Color de texto */
   --color: #ffffff;
   
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   margin-bottom: 20px;
 
-  /* TÍTULO DE LA NOTICIA */
+  /* Transición suave y cursor de mano */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+
+  /* Efecto al pasar el ratón por toda la tarjeta */
+  &:hover {
+    transform: translateY(-5px); /* La tarjeta sube un poco */
+    box-shadow: 0 12px 20px rgba(0, 100, 255, 0.15); /* Sombra azulada */
+    
+    /* Efecto zoom en la imagen al tocar la tarjeta */
+    .image-container img {
+      transform: scale(1.05);
+    }
+  }
+
+  /* titulo de la noticia */
   ion-card-title {
     --color: #ffffff;
     color: #ffffff !important;
@@ -33,7 +48,7 @@ ion-content {
     gap: 8px;
   }
 
-  /* Contenido / Descripción */
+  /* Descripción de la noticia*/
   ion-card-content {
     p {
       color: #d1d1d1;
@@ -42,13 +57,13 @@ ion-content {
     }
   }
 
-  /* Iconos de acción (Editar / Borrar) */
+  /* Iconos editar y borrar*/
   ion-button {
     --color: #ffffff;
   }
 }
 
-/* Estilos de la imagen dentro de la tarjeta */
+/* Estilos de la imagen de la noticia */
 .image-container {
   width: 100%;
   height: 180px;
@@ -59,12 +74,8 @@ ion-content {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  /* Efecto zoom suave al pasar el ratón */
-  &:hover img {
-    transform: scale(1.05);
+    /* Transición un poco más lenta para suavidad */
+    transition: transform 0.5s ease; 
   }
 }
 
@@ -110,7 +121,7 @@ ion-content {
   
   /* Degradado para leer el texto */
   background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.9) 100%);
-
+  
   display: flex;
   align-items: flex-end;
   padding: 20px;
