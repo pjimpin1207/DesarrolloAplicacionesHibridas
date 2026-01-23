@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { IonicModule, ToastController, AlertController, AnimationController } from '@ionic/angular';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { IonicModule, ToastController, AlertController, AnimationController, LoadingController } from '@ionic/angular'; // 👈 Importamos LoadingController
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NoticiaItemComponent } from '../components/noticia-item/noticia-item.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { Noticia } from '../interfaces/noticia';
 import { NoticiaService } from '../services/noticia.service';
-import { RouterLink, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
 import { addIcons } from 'ionicons';
-import { trash, add, create } from 'ionicons/icons';
+import { trash, add, create, alertCircleOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -45,28 +44,57 @@ export class HomePage implements OnInit {
     private noticiaService: NoticiaService,
     private toastController: ToastController,
     private alertController: AlertController,
+    private loadingController: LoadingController,
     private animationCtrl: AnimationController,
     private router: Router,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private cdr: ChangeDetectorRef
   ) {
-    // Registramos los iconos: trash (borrar), add (añadir) y create (editar)
-    addIcons({ trash, add, create });
+    addIcons({ trash, add, create, alertCircleOutline });
   }
 
-  async ngOnInit() {
-    this.nombreUsuario = await this.settingsService.getUserName();
-  }
+  ngOnInit() {}
 
   async ionViewWillEnter() {
+    this.nombreUsuario = await this.settingsService.getUserName();
     await this.cargarNoticias();
+    this.cdr.detectChanges();
   }
 
+  // metodo para mostrar los errores
+  async mostrarError(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 3000,
+      color: 'danger',
+      icon: 'alert-circle-outline',
+      position: 'bottom'
+    });
+    await toast.present();
+  }
+
+  // cargar las noticias con feedback
   async cargarNoticias() {
+    
+    // mostrar cuadrado de carga de noticias
+    const loading = await this.loadingController.create({
+      message: 'Cargando noticias...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
     try {
       this.noticias = await this.noticiaService.getNoticias();
       this.loading = false;
+      
     } catch (error) {
-      console.error('Error al cargar las noticias:', error);
+      console.error('Error al cargar:', error);
+      this.mostrarError('No se pudieron cargar las noticias.');
+      
+    } finally {
+     // ocultar la ventana cuando acaba de cargar
+      await loading.dismiss();
+      this.cdr.detectChanges();
     }
   }
 
@@ -84,14 +112,10 @@ export class HomePage implements OnInit {
   }
 
   navegarAAbout() {
-    console.log("Realizando operaciones previas...");
-    console.log("Navegando a la página About...");
     this.router.navigate(['/about']);
   }
 
-  // Abre el modal vacío para crear
   abrirModal() {
-    // Aseguramos que esté limpio por si acaso
     this.nuevaNoticia = {
       id: 0, titulo: '', descripcion: '', imagen: '',
       esUrgente: false, categoria: '', fecha: new Date()
@@ -99,9 +123,7 @@ export class HomePage implements OnInit {
     this.modalAbierto = true;
   }
 
-  // NUEVO: Carga los datos de una noticia existente y abre el modal
   prepararEdicion(noticia: Noticia) {
-    // Copiamos la noticia para no modificar la lista visualmente antes de guardar
     this.nuevaNoticia = { ...noticia };
     this.modalAbierto = true;
   }
@@ -110,18 +132,10 @@ export class HomePage implements OnInit {
     this.modalAbierto = false;
   }
 
+  // metodo para guardar y editar las noticias
   async agregarNoticia() {
-    if (
-      !this.nuevaNoticia.titulo.trim() ||
-      !this.nuevaNoticia.descripcion.trim() ||
-      !this.nuevaNoticia.categoria
-    ) {
-      const toast = await this.toastController.create({
-        message: 'Por favor, completa todos los campos obligatorios.',
-        duration: 2000,
-        color: 'warning',
-      });
-      await toast.present();
+    if (!this.nuevaNoticia.titulo.trim() || !this.nuevaNoticia.descripcion.trim()) {
+      this.mostrarError('Por favor, completa los campos obligatorios.');
       return;
     }
 
@@ -133,68 +147,77 @@ export class HomePage implements OnInit {
         {
           text: 'Guardar',
           handler: async () => {
+            
+            // mostrar "guardando.."
+            const loading = await this.loadingController.create({ 
+              message: 'Guardando...' 
+            });
+            await loading.present();
+
             try {
-              // CAMBIO: Si tiene ID > 0 es Editar (PUT), si no es Crear (POST)
               if (this.nuevaNoticia.id && this.nuevaNoticia.id !== 0) {
                 await this.noticiaService.updateNoticia(this.nuevaNoticia);
               } else {
                 await this.noticiaService.addNoticia(this.nuevaNoticia);
               }
 
-              // Reseteamos
+              // resetear el formulario
               this.nuevaNoticia = {
-                id: 0,
-                titulo: '',
-                descripcion: '',
-                imagen: '',
-                esUrgente: false,
-                categoria: '',
-                fecha: new Date()
+                id: 0, titulo: '', descripcion: '', imagen: '',
+                esUrgente: false, categoria: '', fecha: new Date()
               };
 
-              await this.cargarNoticias();
+              await loading.dismiss(); 
               this.cerrarModal();
+
+              await this.cargarNoticias();
 
               const toast = await this.toastController.create({
                 message: 'Operación realizada correctamente',
-                duration: 2500,
+                duration: 2000,
                 color: 'success',
               });
               await toast.present();
 
             } catch (error) {
+              // Si falla quita el loading y mostrar error
+              await loading.dismiss();
               console.error('Error al guardar:', error);
+              this.mostrarError('Error al guardar la noticia. Inténtalo de nuevo.');
             }
           }
         }
       ]
     });
-
     await alert.present();
   }
 
-async borrarNoticia(id: number) {
+  // borrar con feedback
+  async borrarNoticia(id: number) {
     const alert = await this.alertController.create({
       header: 'Eliminar noticia',
-      message: '¿Estás seguro de que quieres eliminar esta noticia? Esta acción no se puede deshacer.',
+      message: '¿Estás seguro? Esta acción no se puede deshacer.',
       buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-        },
+        { text: 'Cancelar', role: 'cancel', cssClass: 'secondary' },
         {
           text: 'Eliminar',
-          role: 'destructive', // Esto suele poner el texto en rojo en iOS
+          role: 'destructive',
           handler: async () => {
+            
+            // mostrar el loading
+            const loading = await this.loadingController.create({ 
+              message: 'Eliminando...',
+              spinner: 'circles'
+            });
+            await loading.present();
+
             try {
-              // 1. Llamamos al servicio para borrar
               await this.noticiaService.deleteNoticia(id);
+     
+              await loading.dismiss();
               
-              // 2. Recargamos la lista
               await this.cargarNoticias();
 
-              // 3. Mostramos feedback
               const toast = await this.toastController.create({
                 message: 'Noticia eliminada correctamente',
                 duration: 2000,
@@ -203,14 +226,14 @@ async borrarNoticia(id: number) {
               await toast.present();
 
             } catch (error) {
+              await loading.dismiss();
               console.error('Error al borrar:', error);
+              this.mostrarError('No se pudo eliminar la noticia.');
             }
           }
         }
       ]
     });
-
     await alert.present();
   }
-
 }

@@ -2,32 +2,14 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <ion-grid class="hero-section">
-    <ion-row class="ion-align-items-center">
-      <ion-col size="12" size-md="6" class="hero-text">
-
-        <h1>Bienvenido a <span class="accent">InfoNow</span></h1>
-
-        <p *ngIf="nombreUsuario" class="saludo-usuario">
-          Hola, <strong>{{ nombreUsuario }}</strong> 👋
-        </p>
-
-        <h2>Tu portal de noticias deportivas</h2>
-
-        <p>
-          Descubre lo último en <strong>fútbol</strong>, <strong>baloncesto</strong> y <strong>tenis</strong>.
-          Resultados, análisis y lo mejor del deporte mundial.
-        </p>
-      </ion-col>
-
-      <ion-col size="12" size-md="6" class="hero-image">
-        <ion-img 
-          src="https://madridistareal.com/wp-content/uploads/2025/10/jude-bellingham-celebracion-gol-clasico.webp"
-          alt="Noticias deportivas">
-        </ion-img>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div class="hero-banner">
+  <div class="hero-overlay">
+    <div class="hero-text">
+      <h2>Bienvenido a InfoNow</h2>
+      <p *ngIf="nombreUsuario">Tu feed personalizada, <strong>{{ nombreUsuario }}</strong>.</p>
+    </div>
+  </div>
+</div>
 
   <ion-button (click)="navegarAAbout()">
     Ir a About
