@@ -18,15 +18,31 @@ export class NoticiaService {
     return firstValueFrom(this.http.get<Noticia[]>(this.apiUrl));
   }
 
-  async getNoticiaPorId(id: number): Promise<Noticia> {
+  // 👉 CAMBIO 1: Aceptamos string o number (MockAPI usa strings)
+  async getNoticiaPorId(id: number | string): Promise<Noticia> {
     const url = `${this.apiUrl}/${id}`;
     return firstValueFrom(this.http.get<Noticia>(url));
   }
 
+  // 👉 CAMBIO 2: Limpieza de datos para evitar Error 400
   async addNoticia(noticia: Noticia): Promise<Noticia> {
-    noticia.fecha = new Date();
-    const { id, ...noticiaSinId } = noticia;
-    return firstValueFrom(this.http.post<Noticia>(this.apiUrl, noticiaSinId));
+    
+    // Creamos un objeto NUEVO y limpio para enviar al servidor
+    // Convertimos la fecha a string ISO para evitar problemas de formato
+    const datosParaEnviar = {
+      titulo: noticia.titulo,
+      descripcion: noticia.descripcion,
+      imagen: noticia.imagen,
+      categoria: noticia.categoria,
+      esUrgente: noticia.esUrgente,
+      fecha: new Date().toISOString() // Fecha como texto
+      // ⚠️ IMPORTANTE: No incluimos el 'id', MockAPI lo genera solo
+    };
+
+    console.log('📡 Enviando POST a:', this.apiUrl);
+    console.log('📦 Datos:', datosParaEnviar);
+
+    return firstValueFrom(this.http.post<Noticia>(this.apiUrl, datosParaEnviar));
   }
 
   // Actualizar noticia existente con PUT
@@ -37,8 +53,8 @@ export class NoticiaService {
     );
   }
 
-  // Eliminar noticias
-  async deleteNoticia(id: number): Promise<void> {
+  // 👉 CAMBIO 3: Aceptamos string o number en delete
+  async deleteNoticia(id: number | string): Promise<void> {
     const url = `${this.apiUrl}/${id}`;
     return firstValueFrom(
       this.http.delete<void>(url)

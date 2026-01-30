@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // Añadimos nuestra variable global aquí
-  apiUrl: 'http://localhost:3000' 
+  apiUrl: 'https://697c6289889a1aecfeb23bf4.mockapi.io/' 
 };
 
 /*
