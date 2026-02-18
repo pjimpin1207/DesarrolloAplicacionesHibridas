@@ -14,8 +14,15 @@ export class NoticiaService {
 
   constructor(private http: HttpClient) {}
   
-  async getNoticias(): Promise<Noticia[]> {
-    return firstValueFrom(this.http.get<Noticia[]>(this.apiUrl));
+  // Crear filtro
+  async getNoticias(filtro: string = '', orden: string = 'desc'): Promise<Noticia[]> {
+    let url = `${this.apiUrl}?sortBy=fecha&order=${orden}`;
+
+    if (filtro) {
+      url += `&search=${filtro}`;
+    }
+
+    return firstValueFrom(this.http.get<Noticia[]>(url));
   }
 
   // 👉 CAMBIO 1: Aceptamos string o number (MockAPI usa strings)

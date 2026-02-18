@@ -3,17 +3,43 @@
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <div class="hero-banner">
-  <div class="hero-overlay">
-    <div class="hero-text">
-      <h2>Bienvenido a InfoNow</h2>
-      <p *ngIf="nombreUsuario">Tu feed personalizada, <strong>{{ nombreUsuario }}</strong>.</p>
+    <div class="hero-overlay">
+      <div class="hero-text">
+        <h2>Bienvenido a InfoNow</h2>
+        <p *ngIf="nombreUsuario">Tu feed personalizada, <strong>{{ nombreUsuario }}</strong>.</p>
+      </div>
     </div>
   </div>
-</div>
 
-  <ion-button (click)="navegarAAbout()">
+  <ion-button (click)="navegarAAbout()" fill="outline" class="ion-margin-bottom">
     Ir a About
   </ion-button>
+
+  <div class="toolbar-container">
+    
+    <ion-searchbar 
+      class="custom-searchbar"
+      placeholder="Buscar..." 
+      animated="true"
+      showCancelButton="focus"
+      cancelButtonText="X"
+      debounce="500"
+      (ionInput)="manejarBusqueda($event)">
+    </ion-searchbar>
+
+    <div class="filter-wrapper">
+      <ion-icon name="filter"></ion-icon>
+      
+      <ion-select 
+        interface="popover" 
+        [value]="ordenActual" 
+        (ionChange)="manejarOrden($event)">
+        <ion-select-option value="desc">Más recientes</ion-select-option>
+        <ion-select-option value="asc">Más antiguas</ion-select-option>
+      </ion-select>
+    </div>
+
+  </div>
 
   <ion-grid *ngIf="loading" class="news-grid fade-in">
     <ion-row>
@@ -42,7 +68,11 @@
         size-lg="4"
         *ngFor="let noticia of noticias">
 
-        <ion-card class="news-card">
+        <ion-card 
+          class="news-card ion-activatable ripple-parent" 
+          (click)="irAlDetalle(noticia.id)">
+          
+          <ion-ripple-effect></ion-ripple-effect>
           
           <div *ngIf="noticia.imagen" style="height: 180px; overflow: hidden; position: relative;">
             <img [src]="noticia.imagen" style="width: 100%; height: 100%; object-fit: cover;">
@@ -58,13 +88,19 @@
                 {{ noticia.titulo }}
               </ion-card-title>
 
-              <div style="display: flex;">
+              <div style="display: flex; z-index: 10;">
                 
-                <ion-button fill="clear" color="primary" (click)="prepararEdicion(noticia)">
+                <ion-button 
+                  fill="clear" 
+                  color="primary" 
+                  (click)="$event.stopPropagation(); prepararEdicion(noticia)">
                   <ion-icon slot="icon-only" name="create"></ion-icon>
                 </ion-button>
 
-                <ion-button fill="clear" color="medium" (click)="borrarNoticia(noticia.id)">
+                <ion-button 
+                  fill="clear" 
+                  color="medium" 
+                  (click)="$event.stopPropagation(); borrarNoticia(noticia.id)">
                   <ion-icon slot="icon-only" name="trash"></ion-icon>
                 </ion-button>
 
@@ -89,8 +125,8 @@
   </ion-grid>
 
   <div *ngIf="!loading && noticias.length === 0" class="mensaje-vacio">
-    <p>No hay noticias disponibles en este momento.</p>
-    <p>¡Publica la primera!</p>
+    <p>No hay noticias disponibles con estos filtros.</p>
+    <p>¡Prueba otra búsqueda!</p>
   </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

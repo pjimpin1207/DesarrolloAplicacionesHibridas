@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { IonicModule, ToastController, AlertController, AnimationController, LoadingController } from '@ionic/angular'; // 👈 Importamos LoadingController
+import { IonicModule, ToastController, AlertController, AnimationController, LoadingController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../components/header/header.component';
@@ -8,7 +8,7 @@ import { NoticiaService } from '../services/noticia.service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
 import { addIcons } from 'ionicons';
-import { trash, add, create, alertCircleOutline } from 'ionicons/icons';
+import { trash, add, create, alertCircleOutline, filter } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +26,10 @@ export class HomePage implements OnInit {
 
   noticias: Noticia[] = [];
   nombreUsuario: string = '';
+
+  // Variables para los filtros
+  busquedaActual: string = '';
+  ordenActual: string = 'desc'; // Por defecto: más recientes
 
   nuevaNoticia: Noticia = {
     id: 0,
@@ -50,7 +54,7 @@ export class HomePage implements OnInit {
     private settingsService: SettingsService,
     private cdr: ChangeDetectorRef
   ) {
-    addIcons({ trash, add, create, alertCircleOutline });
+    addIcons({ trash, add, create, alertCircleOutline, filter });
   }
 
   ngOnInit() {}
@@ -61,7 +65,7 @@ export class HomePage implements OnInit {
     this.cdr.detectChanges();
   }
 
-  // metodo para mostrar los errores
+  // Metodo para mostrar los errores
   async mostrarError(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
@@ -73,10 +77,10 @@ export class HomePage implements OnInit {
     await toast.present();
   }
 
-  // cargar las noticias con feedback
+  // Cargar noticias con filtro y orden
   async cargarNoticias() {
     
-    // mostrar cuadrado de carga de noticias
+    // Mostrar cuadrado de carga
     const loading = await this.loadingController.create({
       message: 'Cargando noticias...',
       spinner: 'crescent'
@@ -84,7 +88,14 @@ export class HomePage implements OnInit {
     await loading.present();
 
     try {
-      this.noticias = await this.noticiaService.getNoticias();
+      // Pasamos la búsqueda y el orden al servicio (MockAPI)
+      this.noticias = await this.noticiaService.getNoticias(
+        this.busquedaActual, 
+        this.ordenActual
+      );
+      
+      // La API ya devuelve los datos ordenados, no hace falta .reverse()
+      
       this.loading = false;
       
     } catch (error) {
@@ -92,10 +103,26 @@ export class HomePage implements OnInit {
       this.mostrarError('No se pudieron cargar las noticias.');
       
     } finally {
-     // ocultar la ventana cuando acaba de cargar
       await loading.dismiss();
       this.cdr.detectChanges();
     }
+  }
+  
+  // Se ejecuta al escribir en el buscador
+  manejarBusqueda(event: any) {
+    this.busquedaActual = event.detail.value;
+    this.cargarNoticias(); // Recargamos con el filtro
+  }
+
+  // Se ejecuta al cambiar el select de orden
+  manejarOrden(event: any) {
+    this.ordenActual = event.detail.value;
+    this.cargarNoticias(); // Recargamos con el nuevo orden
+  }
+
+  // Navegación manual para evitar conflictos con los botones
+  irAlDetalle(id: number | string) {
+    this.router.navigate(['/detalle-noticia', id]);
   }
 
   ionViewDidEnter() {
@@ -132,7 +159,7 @@ export class HomePage implements OnInit {
     this.modalAbierto = false;
   }
 
-  // metodo para guardar y editar las noticias
+  // Metodo para guardar y editar las noticias
   async agregarNoticia() {
     if (!this.nuevaNoticia.titulo.trim() || !this.nuevaNoticia.descripcion.trim()) {
       this.mostrarError('Por favor, completa los campos obligatorios.');
@@ -148,7 +175,6 @@ export class HomePage implements OnInit {
           text: 'Guardar',
           handler: async () => {
             
-            // mostrar "guardando.."
             const loading = await this.loadingController.create({ 
               message: 'Guardando...' 
             });
@@ -161,7 +187,6 @@ export class HomePage implements OnInit {
                 await this.noticiaService.addNoticia(this.nuevaNoticia);
               }
 
-              // resetear el formulario
               this.nuevaNoticia = {
                 id: 0, titulo: '', descripcion: '', imagen: '',
                 esUrgente: false, categoria: '', fecha: new Date()
@@ -170,7 +195,7 @@ export class HomePage implements OnInit {
               await loading.dismiss(); 
               this.cerrarModal();
 
-              await this.cargarNoticias();
+              await this.cargarNoticias(); // Se recarga respetando filtros
 
               const toast = await this.toastController.create({
                 message: 'Operación realizada correctamente',
@@ -180,7 +205,6 @@ export class HomePage implements OnInit {
               await toast.present();
 
             } catch (error) {
-              // Si falla quita el loading y mostrar error
               await loading.dismiss();
               console.error('Error al guardar:', error);
               this.mostrarError('Error al guardar la noticia. Inténtalo de nuevo.');
@@ -192,8 +216,8 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
-  // borrar con feedback
-  async borrarNoticia(id: number) {
+  // Borrar noticia
+  async borrarNoticia(id: number | string) {
     const alert = await this.alertController.create({
       header: 'Eliminar noticia',
       message: '¿Estás seguro? Esta acción no se puede deshacer.',
@@ -204,7 +228,6 @@ export class HomePage implements OnInit {
           role: 'destructive',
           handler: async () => {
             
-            // mostrar el loading
             const loading = await this.loadingController.create({ 
               message: 'Eliminando...',
               spinner: 'circles'
@@ -213,7 +236,7 @@ export class HomePage implements OnInit {
 
             try {
               await this.noticiaService.deleteNoticia(id);
-     
+       
               await loading.dismiss();
               
               await this.cargarNoticias();
