@@ -1,47 +1,68 @@
-<ion-header>
-  <ion-toolbar color="primary">
+<ion-header class="ion-no-border">
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/home" text="Volver" color="primary"></ion-back-button>
     </ion-buttons>
-    <ion-title>Detalle de Noticia</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content [fullscreen]="true" class="ion-padding">
 
-  <div *ngIf="noticia; else noEncontrada">
+  <div *ngIf="!noticia && !errorCarga" class="skeleton-wrapper">
+    <ion-skeleton-text animated style="width: 100%; height: 40px; border-radius: 8px; margin-bottom: 10px;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 40%; height: 20px; border-radius: 4px; margin-bottom: 25px;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%; height: 220px; border-radius: 16px; margin-bottom: 20px;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 100%; height: 15px; margin-bottom: 8px;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 90%; height: 15px; margin-bottom: 8px;"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width: 95%; height: 15px;"></ion-skeleton-text>
+  </div>
 
-    <ion-img [src]="noticia.imagen"></ion-img>
+  <div *ngIf="noticia" class="article-container fade-in">
 
-    <h1>{{ noticia.titulo }}</h1>
+    <div class="article-header">
+      <h1 class="main-title">{{ noticia.titulo }}</h1>
 
-    <p>
-      <ion-badge color="secondary" *ngIf="noticia.categoria">
-        {{ noticia.categoria }}
-      </ion-badge>
+      <div class="meta-data">
+        <ion-badge color="primary" class="category-badge">
+          {{ noticia.categoria }}
+        </ion-badge>
 
-      <ion-badge color="danger" *ngIf="noticia.esUrgente">
-        URGENTE
-      </ion-badge>
-    </p>
+        <span class="date-text">
+          <ion-icon name="calendar-outline"></ion-icon>
+          {{ noticia.fecha | date:'longDate' }}
+        </span>
+      </div>
+    </div>
 
-    <p><strong>Fecha:</strong> {{ noticia.fecha | date:'mediumDate' }}</p>
+    <div class="image-wrapper">
+      <img [src]="noticia.imagen" alt="Imagen noticia" class="article-img" 
+           onerror="this.src='https://via.placeholder.com/800x400?text=Sin+Imagen'">
+      
+      <div *ngIf="noticia.esUrgente" class="urgent-overlay">
+        🔥 URGENTE
+      </div>
+    </div>
 
-    <p class="descripcion">
-      {{ noticia.descripcion }}
-    </p>
+    <div class="article-body">
+      <p>{{ noticia.descripcion }}</p>
+    </div>
 
   </div>
 
-  
-  
-
-  <!-- Noticia no encontrada -->
   <ng-template #noEncontrada>
-    <div class="ion-text-center">
-      <p>Noticia no encontrada.</p>
-      <ion-button routerLink="/home">Volver</ion-button>
+    <div class="error-container">
+      <ion-icon name="alert-circle-outline" size="large" color="medium"></ion-icon>
+      <h2>Noticia no encontrada</h2>
+      <p>Es posible que haya sido eliminada o el enlace sea incorrecto.</p>
+      <ion-button routerLink="/home" shape="round" fill="outline" class="ion-margin-top">
+        Volver al inicio
+      </ion-button>
     </div>
   </ng-template>
+
+  <div *ngIf="!noticia && errorCarga">
+    <ng-container *ngTemplateOutlet="noEncontrada"></ng-container>
+  </div>
 
 </ion-content>

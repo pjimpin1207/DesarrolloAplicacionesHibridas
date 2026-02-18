@@ -1,0 +1,105 @@
+/* Contenedor centrado para tablets/PC */
+.article-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+/* ESTILOS DEL TÍTULO */
+.main-title {
+  font-size: 28px;
+  font-weight: 800; /* Letra muy gruesa */
+  line-height: 1.2;
+  margin-bottom: 15px;
+  color: var(--ion-text-color);
+}
+
+.meta-data {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+
+  .category-badge {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 20px;
+  }
+
+  .date-text {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}
+
+/* ESTILOS DE LA IMAGEN*/
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 240px; /* Altura fija para uniformidad */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+  margin-bottom: 30px;
+  background-color: var(--ion-color-light);
+
+  .article-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto es CLAVE: recorta la imagen para que llene el hueco sin deformarse */
+    transition: transform 0.3s;
+  }
+
+  /* Etiqueta urgente flotante */
+  .urgent-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(var(--ion-color-danger-rgb), 0.9);
+    color: white;
+    text-align: center;
+    padding: 6px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    backdrop-filter: blur(4px);
+  }
+}
+
+/*ESTILOS DEL TEXTO */
+.article-body p {
+  font-size: 18px; /* Texto grande y legible */
+  line-height: 1.7;
+  color: var(--ion-color-step-800);
+  opacity: 0.9;
+  text-align: justify;
+}
+
+/* ESTILOS DE ERROR */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  text-align: center;
+  opacity: 0.7;
+
+  h2 { font-weight: bold; }
+}
+
+/* ANIMACIÓN DE ENTRADA */
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
