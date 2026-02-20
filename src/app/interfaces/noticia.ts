@@ -6,4 +6,7 @@ export interface Noticia {
   esUrgente: boolean;
   fecha: Date;
   categoria?: string;
+
+  latitud?: number;
+  longitud?: number;
 }

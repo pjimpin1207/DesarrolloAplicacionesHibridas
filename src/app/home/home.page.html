@@ -182,7 +182,23 @@
             <ion-toggle [(ngModel)]="nuevaNoticia.esUrgente" name="esUrgente" color="secondary"></ion-toggle>
           </ion-item>
 
-          <ion-button expand="block" type="submit" color="secondary" shape="round" class="mt-3">
+          <div class="ion-margin-top ion-text-center">
+            <ion-button 
+              fill="outline" 
+              color="tertiary" 
+              (click)="adjuntarUbicacion()" 
+              [disabled]="buscandoGPS"
+              shape="round">
+              
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              
+              <span *ngIf="buscandoGPS">Buscando satélites...</span>
+              <span *ngIf="!buscandoGPS && !nuevaNoticia.latitud">Adjuntar mi ubicación</span>
+              <span *ngIf="!buscandoGPS && nuevaNoticia.latitud">¡Ubicación guardada! ✓</span>
+              
+            </ion-button>
+          </div>
+          <ion-button expand="block" type="submit" color="secondary" shape="round" class="ion-margin-top">
              {{ nuevaNoticia.id === 0 ? 'Publicar noticia' : 'Guardar cambios' }}
           </ion-button>
 

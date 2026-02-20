@@ -7,8 +7,13 @@ import { Noticia } from '../interfaces/noticia';
 import { NoticiaService } from '../services/noticia.service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
+
+// 👇 Importamos tu servicio de GPS
+import { LocationService } from '../services/location.service';
+
 import { addIcons } from 'ionicons';
-import { trash, add, create, alertCircleOutline, filter } from 'ionicons/icons';
+// 👇 Añadimos locationOutline
+import { trash, add, create, alertCircleOutline, filter, locationOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -27,9 +32,8 @@ export class HomePage implements OnInit {
   noticias: Noticia[] = [];
   nombreUsuario: string = '';
 
-  // Variables para los filtros
   busquedaActual: string = '';
-  ordenActual: string = 'desc'; // Por defecto: más recientes
+  ordenActual: string = 'desc';
 
   nuevaNoticia: Noticia = {
     id: 0,
@@ -38,11 +42,17 @@ export class HomePage implements OnInit {
     imagen: '',
     esUrgente: false,
     categoria: '',
-    fecha: new Date()
+    fecha: new Date(),
+    // Inicializamos con undefined
+    latitud: undefined, 
+    longitud: undefined
   };
 
   loading = true;
   modalAbierto = false;
+  
+  // 👇 Estado para saber si el GPS está buscando (útil para desactivar el botón)
+  buscandoGPS = false; 
 
   constructor(
     private noticiaService: NoticiaService,
@@ -52,9 +62,12 @@ export class HomePage implements OnInit {
     private animationCtrl: AnimationController,
     private router: Router,
     private settingsService: SettingsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    // 👇 Inyectamos el servicio
+    private locationService: LocationService 
   ) {
-    addIcons({ trash, add, create, alertCircleOutline, filter });
+    // Registramos el icono del GPS
+    addIcons({ trash, add, create, alertCircleOutline, filter, locationOutline });
   }
 
   ngOnInit() {}
@@ -65,22 +78,19 @@ export class HomePage implements OnInit {
     this.cdr.detectChanges();
   }
 
-  // Metodo para mostrar los errores
-  async mostrarError(mensaje: string) {
+  // Método para mostrar mensajes (modificado para aceptar color)
+  async mostrarMensaje(mensaje: string, color: string = 'danger') {
     const toast = await this.toastController.create({
       message: mensaje,
       duration: 3000,
-      color: 'danger',
-      icon: 'alert-circle-outline',
+      color: color,
+      icon: color === 'danger' ? 'alert-circle-outline' : undefined,
       position: 'bottom'
     });
     await toast.present();
   }
 
-  // Cargar noticias con filtro y orden
   async cargarNoticias() {
-    
-    // Mostrar cuadrado de carga
     const loading = await this.loadingController.create({
       message: 'Cargando noticias...',
       spinner: 'crescent'
@@ -88,39 +98,27 @@ export class HomePage implements OnInit {
     await loading.present();
 
     try {
-      // Pasamos la búsqueda y el orden al servicio (MockAPI)
-      this.noticias = await this.noticiaService.getNoticias(
-        this.busquedaActual, 
-        this.ordenActual
-      );
-      
-      // La API ya devuelve los datos ordenados, no hace falta .reverse()
-      
+      this.noticias = await this.noticiaService.getNoticias(this.busquedaActual, this.ordenActual);
       this.loading = false;
-      
     } catch (error) {
       console.error('Error al cargar:', error);
-      this.mostrarError('No se pudieron cargar las noticias.');
-      
+      this.mostrarMensaje('No se pudieron cargar las noticias.', 'danger');
     } finally {
       await loading.dismiss();
       this.cdr.detectChanges();
     }
   }
   
-  // Se ejecuta al escribir en el buscador
   manejarBusqueda(event: any) {
     this.busquedaActual = event.detail.value;
-    this.cargarNoticias(); // Recargamos con el filtro
+    this.cargarNoticias();
   }
 
-  // Se ejecuta al cambiar el select de orden
   manejarOrden(event: any) {
     this.ordenActual = event.detail.value;
-    this.cargarNoticias(); // Recargamos con el nuevo orden
+    this.cargarNoticias();
   }
 
-  // Navegación manual para evitar conflictos con los botones
   irAlDetalle(id: number | string) {
     this.router.navigate(['/detalle-noticia', id]);
   }
@@ -143,9 +141,11 @@ export class HomePage implements OnInit {
   }
 
   abrirModal() {
+    // 👇 Asegúrate de resetear las coordenadas también al crear una nueva
     this.nuevaNoticia = {
       id: 0, titulo: '', descripcion: '', imagen: '',
-      esUrgente: false, categoria: '', fecha: new Date()
+      esUrgente: false, categoria: '', fecha: new Date(),
+      latitud: undefined, longitud: undefined
     };
     this.modalAbierto = true;
   }
@@ -159,10 +159,31 @@ export class HomePage implements OnInit {
     this.modalAbierto = false;
   }
 
-  // Metodo para guardar y editar las noticias
+  // 👇 NUEVO MÉTODO PARA EL BOTÓN DEL GPS
+  async adjuntarUbicacion() {
+    this.buscandoGPS = true; // Activa el estado de "buscando"
+    
+    try {
+      const coords = await this.locationService.obtenerPosicionActual();
+      
+      if (coords) {
+        this.nuevaNoticia.latitud = coords.latitud;
+        this.nuevaNoticia.longitud = coords.longitud;
+        this.mostrarMensaje('📍 Ubicación guardada con éxito', 'success');
+      } else {
+        this.mostrarMensaje('No se pudo obtener la ubicación. Revisa los permisos.', 'warning');
+      }
+    } catch (error) {
+      this.mostrarMensaje('Error inesperado al buscar GPS', 'danger');
+    } finally {
+      this.buscandoGPS = false; // Desactiva el estado
+      this.cdr.detectChanges(); // Fuerza la actualización del HTML
+    }
+  }
+
   async agregarNoticia() {
     if (!this.nuevaNoticia.titulo.trim() || !this.nuevaNoticia.descripcion.trim()) {
-      this.mostrarError('Por favor, completa los campos obligatorios.');
+      this.mostrarMensaje('Por favor, completa los campos obligatorios.', 'danger');
       return;
     }
 
@@ -187,27 +208,16 @@ export class HomePage implements OnInit {
                 await this.noticiaService.addNoticia(this.nuevaNoticia);
               }
 
-              this.nuevaNoticia = {
-                id: 0, titulo: '', descripcion: '', imagen: '',
-                esUrgente: false, categoria: '', fecha: new Date()
-              };
-
-              await loading.dismiss(); 
               this.cerrarModal();
+              await loading.dismiss(); 
+              await this.cargarNoticias();
 
-              await this.cargarNoticias(); // Se recarga respetando filtros
-
-              const toast = await this.toastController.create({
-                message: 'Operación realizada correctamente',
-                duration: 2000,
-                color: 'success',
-              });
-              await toast.present();
+              this.mostrarMensaje('Operación realizada correctamente', 'success');
 
             } catch (error) {
               await loading.dismiss();
               console.error('Error al guardar:', error);
-              this.mostrarError('Error al guardar la noticia. Inténtalo de nuevo.');
+              this.mostrarMensaje('Error al guardar la noticia. Inténtalo de nuevo.', 'danger');
             }
           }
         }
@@ -216,7 +226,6 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
-  // Borrar noticia
   async borrarNoticia(id: number | string) {
     const alert = await this.alertController.create({
       header: 'Eliminar noticia',
@@ -236,22 +245,14 @@ export class HomePage implements OnInit {
 
             try {
               await this.noticiaService.deleteNoticia(id);
-       
               await loading.dismiss();
-              
               await this.cargarNoticias();
-
-              const toast = await this.toastController.create({
-                message: 'Noticia eliminada correctamente',
-                duration: 2000,
-                color: 'success'
-              });
-              await toast.present();
+              this.mostrarMensaje('Noticia eliminada correctamente', 'success');
 
             } catch (error) {
               await loading.dismiss();
               console.error('Error al borrar:', error);
-              this.mostrarError('No se pudo eliminar la noticia.');
+              this.mostrarMensaje('No se pudo eliminar la noticia.', 'danger');
             }
           }
         }
