@@ -104,6 +104,7 @@ export class HomePage implements OnInit {
       console.error('Error al cargar:', error);
       this.mostrarMensaje('No se pudieron cargar las noticias.', 'danger');
     } finally {
+      
       await loading.dismiss();
       this.cdr.detectChanges();
     }
