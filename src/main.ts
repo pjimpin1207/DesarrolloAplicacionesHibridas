@@ -2,7 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
-// ImportProvidersFro
+// ImportProvidersFrom
 import { importProvidersFrom } from '@angular/core';
 
 // Ionic Storage
@@ -11,6 +11,9 @@ import { Drivers } from '@ionic/storage';
 
 // HttpClient para APIs REST
 import { provideHttpClient } from '@angular/common/http';
+
+// Importacion para la camara
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
@@ -34,3 +37,6 @@ bootstrapApplication(AppComponent, {
     ),
   ],
 });
+
+// inicializar camara
+defineCustomElements(window);

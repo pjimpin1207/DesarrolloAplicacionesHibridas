@@ -9,17 +9,36 @@
 
 <ion-content class="ion-padding">
 
+  <div class="ion-text-center ion-margin-top ion-margin-bottom">
+    
+    <div style="position: relative; display: inline-block;">
+      
+      <ion-avatar style="width: 120px; height: 120px; margin: 0 auto; border: 4px solid var(--ion-color-primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+        <img *ngIf="fotoPerfil" [src]="fotoPerfil" style="object-fit: cover; width: 100%; height: 100%;" />
+        <ion-icon *ngIf="!fotoPerfil" name="person-circle-outline" style="font-size: 120px; color: gray; margin-top: -4px;"></ion-icon>
+      </ion-avatar>
+
+      <ion-fab-button size="small" (click)="cambiarFoto()" 
+        style="position: absolute; bottom: -5px; right: -5px; --background: var(--ion-color-secondary);">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+
+    </div>
+
+    <h2 style="margin-top: 15px; font-weight: bold;">
+      {{ nombreUsuario || 'Usuario' }}
+    </h2>
+  </div>
+
   <ion-list>
 
     <ion-list-header>Apariencia</ion-list-header>
-
     <ion-item>
       <ion-label>Modo Oscuro</ion-label>
       <ion-toggle [(ngModel)]="modoOscuro" (ionChange)="cambiarModoOscuro()"></ion-toggle>
     </ion-item>
 
     <ion-list-header>Perfil</ion-list-header>
-
     <ion-item>
       <ion-label position="stacked">Nombre del usuario</ion-label>
       <ion-input
@@ -28,7 +47,7 @@
       </ion-input>
     </ion-item>
 
-    <ion-button expand="block" color="primary" class="ion-margin-top"
+    <ion-button expand="block" color="primary" class="ion-margin-top" shape="round"
                 (click)="guardarNombre()">
       Guardar nombre
     </ion-button>
