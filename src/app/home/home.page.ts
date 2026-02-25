@@ -7,12 +7,8 @@ import { Noticia } from '../interfaces/noticia';
 import { NoticiaService } from '../services/noticia.service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../services/settings.service';
-
-// 👇 Importamos tu servicio de GPS
 import { LocationService } from '../services/location.service';
-
 import { addIcons } from 'ionicons';
-// 👇 Añadimos locationOutline
 import { trash, add, create, alertCircleOutline, filter, locationOutline } from 'ionicons/icons';
 
 @Component({
@@ -51,7 +47,7 @@ export class HomePage implements OnInit {
   loading = true;
   modalAbierto = false;
   
-  // 👇 Estado para saber si el GPS está buscando (útil para desactivar el botón)
+  // Estado para saber si el GPS está buscando
   buscandoGPS = false; 
 
   constructor(
@@ -63,7 +59,7 @@ export class HomePage implements OnInit {
     private router: Router,
     private settingsService: SettingsService,
     private cdr: ChangeDetectorRef,
-    // 👇 Inyectamos el servicio
+    // Inyectamos el servicio
     private locationService: LocationService 
   ) {
     // Registramos el icono del GPS
@@ -142,7 +138,6 @@ export class HomePage implements OnInit {
   }
 
   abrirModal() {
-    // 👇 Asegúrate de resetear las coordenadas también al crear una nueva
     this.nuevaNoticia = {
       id: 0, titulo: '', descripcion: '', imagen: '',
       esUrgente: false, categoria: '', fecha: new Date(),
@@ -160,7 +155,7 @@ export class HomePage implements OnInit {
     this.modalAbierto = false;
   }
 
-  // 👇 NUEVO MÉTODO PARA EL BOTÓN DEL GPS
+  // Metodo para el gps, se activa al hacer click en el icono del GPS
   async adjuntarUbicacion() {
     this.buscandoGPS = true; // Activa el estado de "buscando"
     
