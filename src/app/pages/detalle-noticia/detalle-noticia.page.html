@@ -48,7 +48,17 @@
       <p>{{ noticia.descripcion }}</p>
     </div>
 
-  </div>
+    <div *ngIf="noticia?.latitud && noticia?.longitud" class="ion-margin-top">
+      <ion-button 
+        expand="block" 
+        color="tertiary" 
+        [href]="'https://maps.google.com/?q=' + noticia.latitud + ',' + noticia.longitud" 
+        target="_blank">
+        <ion-icon slot="start" name="location-outline"></ion-icon>
+        Ver ubicación en el Mapa
+      </ion-button>
+    </div>
+    </div>
 
   <ng-template #noEncontrada>
     <div class="error-container">

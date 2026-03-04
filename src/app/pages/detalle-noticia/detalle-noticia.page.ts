@@ -8,6 +8,11 @@ import { Noticia } from '../../interfaces/noticia';
 import { addIcons } from 'ionicons';
 import { calendarOutline, alertCircleOutline } from 'ionicons/icons';
 
+import { locationOutline } from 'ionicons/icons';
+
+// Y dentro del constructor:
+addIcons({ locationOutline });
+
 // Importamos componentes Standalone de Ionic
 import {
   IonHeader,
