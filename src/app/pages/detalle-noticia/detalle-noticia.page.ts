@@ -4,14 +4,14 @@ import { CommonModule } from '@angular/common';
 import { NoticiaService } from '../../services/noticia.service';
 import { Noticia } from '../../interfaces/noticia';
 
-// Importamos los iconos necesarios
+import { Share } from '@capacitor/share';
 import { addIcons } from 'ionicons';
-import { calendarOutline, alertCircleOutline } from 'ionicons/icons';
-
-import { locationOutline } from 'ionicons/icons';
-
-// Y dentro del constructor:
-addIcons({ locationOutline });
+import { 
+  calendarOutline, 
+  alertCircleOutline, 
+  locationOutline, 
+  shareSocialOutline 
+} from 'ionicons/icons';
 
 // Importamos componentes Standalone de Ionic
 import {
@@ -21,7 +21,6 @@ import {
   IonBackButton,
   IonTitle,
   IonContent,
-  IonImg,
   IonBadge,
   IonButton,
   IonSkeletonText,
@@ -57,8 +56,13 @@ export class DetalleNoticiaPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private noticiaService: NoticiaService
   ) {
-    // Registramos los iconos que usamos en el HTML
-    addIcons({ calendarOutline, alertCircleOutline });
+    // 👇 2. REGISTRAMOS TODOS LOS ICONOS EN EL CONSTRUCTOR (Limpio y ordenado)
+    addIcons({ 
+      calendarOutline, 
+      alertCircleOutline, 
+      locationOutline, 
+      shareSocialOutline 
+    });
   }
 
   async ngOnInit() {
@@ -81,6 +85,21 @@ export class DetalleNoticiaPage implements OnInit {
     } else {
       // Si no hay ID en la URL, también es un error
       this.errorCarga = true;
+    }
+  }
+
+  async compartirNoticia() {
+    if (this.noticia) {
+      try {
+        await Share.share({
+          title: this.noticia.titulo,
+          text: `¡Mira esta noticia en InfoNow!\n\n${this.noticia.titulo}\n`,
+          url: 'https://mi-app-infonow.com', // Enlace ficticio
+          dialogTitle: 'Compartir noticia con amigos',
+        });
+      } catch (error) {
+        console.error('Error al compartir', error);
+      }
     }
   }
 }

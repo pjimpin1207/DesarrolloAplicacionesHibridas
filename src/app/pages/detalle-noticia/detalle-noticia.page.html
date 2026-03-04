@@ -58,9 +58,17 @@
         Ver ubicación en el Mapa
       </ion-button>
     </div>
-    </div>
 
-  <ng-template #noEncontrada>
+    <div class="ion-margin-top">
+      <ion-button 
+        expand="block" 
+        color="success" 
+        (click)="compartirNoticia()">
+        <ion-icon slot="start" name="share-social-outline"></ion-icon>
+        Compartir noticia
+      </ion-button>
+    </div>
+    </div> <ng-template #noEncontrada>
     <div class="error-container">
       <ion-icon name="alert-circle-outline" size="large" color="medium"></ion-icon>
       <h2>Noticia no encontrada</h2>

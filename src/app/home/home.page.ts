@@ -10,6 +10,7 @@ import { SettingsService } from '../services/settings.service';
 import { LocationService } from '../services/location.service';
 import { addIcons } from 'ionicons';
 import { trash, add, create, alertCircleOutline, filter, locationOutline } from 'ionicons/icons';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 @Component({
   selector: 'app-home',
@@ -172,8 +173,8 @@ export class HomePage implements OnInit {
     } catch (error) {
       this.mostrarMensaje('Error inesperado al buscar GPS', 'danger');
     } finally {
-      this.buscandoGPS = false; // Desactiva el estado
-      this.cdr.detectChanges(); // Fuerza la actualización del HTML
+      this.buscandoGPS = false;
+      this.cdr.detectChanges();
     }
   }
 
@@ -207,6 +208,9 @@ export class HomePage implements OnInit {
               this.cerrarModal();
               await loading.dismiss(); 
               await this.cargarNoticias();
+
+              // vibracion al guardar
+              await Haptics.impact({ style: ImpactStyle.Heavy });
 
               this.mostrarMensaje('Operación realizada correctamente', 'success');
 
@@ -243,6 +247,10 @@ export class HomePage implements OnInit {
               await this.noticiaService.deleteNoticia(id);
               await loading.dismiss();
               await this.cargarNoticias();
+              
+              // vibracion al borrar
+              await Haptics.vibrate();
+
               this.mostrarMensaje('Noticia eliminada correctamente', 'success');
 
             } catch (error) {
