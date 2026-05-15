@@ -1,9 +1,13 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.infonow.app',
+  appId: 'com.jimenez.infonow',
   appName: 'InfoNow',
-  webDir: 'www'
+  webDir: 'www',
+  server: {
+    androidScheme: 'http',
+    cleartext: true
+  }
 };
 
 export default config;
