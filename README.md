@@ -17,8 +17,8 @@
 ## 📸 Capturas de Pantalla (Mockups Pro)
 Aquí puedes ver la interfaz de la aplicación diseñada para facilitar la lectura y la interacción:
 
-| Pantalla Principal | Detalle de Noticia | Configuración |
-| :---: | :---: | :---: |
+| Pantalla Principal | Perfil de Usuario |
+| :---: | :---: |
 | ![Captura 1](docs/store/captura1.png) | ![Captura 2](docs/store/captura2.png) |
 
 ---
